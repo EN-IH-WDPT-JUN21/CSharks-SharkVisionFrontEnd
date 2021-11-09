@@ -9,6 +9,7 @@ import { UserPlaylistComponent } from './user-playlist/user-playlist.component';
 import { MovieSearchComponent } from './movie-search/movie-search.component';
 import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 import { RegisterComponent } from './register/register.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { RegisterComponent } from './register/register.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

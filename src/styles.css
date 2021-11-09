@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Colour palette: 
+    #7843e6
+    #00ffff
+    #ff00ff (Shadows and highlights)
+    #3e628e
+    #c9e0ed
+    */
+
+button {
+    background-color: #3E628E;	
+    color: #c9e0ed;
+    box-shadow: 5px 5px 6px 0px #FF00FF;
+    border-radius: 5px;
+}
+
