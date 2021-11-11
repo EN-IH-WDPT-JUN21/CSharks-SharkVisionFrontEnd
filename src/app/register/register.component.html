@@ -1,1 +1,32 @@
-<p>register works!</p>
+<div class="register">
+
+    <div class="logo">
+        <img src="https://www.pinclipart.com/picdir/big/48-482963_shark-logo-jpg-transparent-stock-sharlk-logo-clipart.png" alt="A blue, geometric shark on a transparent background">
+    </div>
+
+    <div class="register_input">
+        <legend>Register:</legend>
+        <div>
+            <input class="username" type="username" placeholder="Username">
+            <!-- <p class="error_msg" *ngIf="username.invalid && username.touched">That username already exists, please select another one</p> -->
+        </div>
+        <div>
+            <input class="email" type="email" placeholder="Email">
+            <!-- <p class="error_msg" *ngIf="email.invalid && email.touched">Please enter a valid email</p> -->
+        </div>
+        <div>
+            <input class="password" type="password" placeholder="Password..." formControlName="password">
+            <!-- <p class="error_msg" *ngIf="password.invalid && password.touched">Please enter a valid password</p> -->
+        </div>
+
+        <div>
+            <input class="passwordConfirmation" type="password" placeholder="Password confirmation..." formControlName="passwordConfirmation">
+            <!-- <p class="error_msg" *ngIf="passwordConfirmation.invalid && passwordConfirmation.touched">Passwords must match</p> -->
+        </div>
+    </div>
+
+    <div class="register_container">
+        <button class="back_button" (click)="back()">Back</button>
+        <button class="register_button" (click)="register()">Register</button>
+    </div>  
+</div>
