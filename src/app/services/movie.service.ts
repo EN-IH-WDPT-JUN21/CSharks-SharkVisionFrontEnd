@@ -7,13 +7,18 @@ import { Observable } from 'rxjs';
 })
 export class MovieService {
 
-  readonly baseUrl:string = "https://imdb-api.com/en/API/Search/k_xmbw7o8f";
+  readonly searchTitle:string = "https://imdb-api.com/en/API/Search/k_xmbw7o8f";
+  readonly searchKeyword:string = "https://imdb-api.com/en/API/SearchKeyword/k_xmbw7o8f";
 
   constructor(
     private http:HttpClient
   ) { }
 
   getMovie(searchName:string) : Observable<any> {
-    return this.http.get<any>(this.baseUrl + searchName);
+    return this.http.get<any>(this.searchTitle + searchName);
+  }
+
+  getMovieByKeyword(searchName:string) : Observable<any> {
+    return this.http.get<any>(this.searchKeyword + searchName);
   }
 }

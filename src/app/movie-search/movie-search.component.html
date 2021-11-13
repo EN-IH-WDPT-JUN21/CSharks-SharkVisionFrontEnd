@@ -1,1 +1,22 @@
-<p>movie-search works!</p>
+<div class="movie_search">
+    
+    <form (ngSubmit)="onSubmit()" [formGroup]="searchForm">
+
+        <mat-form-field class="example-will-width" appearance="fill">
+            <mat-label>Keyword</mat-label>
+            <input type="text" matInput formControlName="searchKeyword" placeholder="Search by keyword...">
+        </mat-form-field>
+
+    </form>
+
+    <div class="buttons">
+        <button class="submit" (click)="onSubmit()">Submit</button>
+        <button class="cancel" (click)="cancel()">Cancel</button>
+    </div>
+
+    <div class="result">
+        {{foundMovie[1]}}
+    </div>
+
+
+</div>
