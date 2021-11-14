@@ -2,7 +2,6 @@ import { Playlist } from './../models/playlist';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +24,23 @@ export class PlaylistService {
     return this.http.get<Playlist>(this.baseUrl + id);
   }
 
-  // Get Playlist By User Id
+  // Get a Playlist by User id
   getPlaylistByUserId(userId: number) : Observable<any> {
     return this.http.get<Playlist[]>(this.baseUrl + '/user/' + userId);
+  }
+
+  // Delete a Playlist
+  deletePlaylist(id: number) : Observable<any> {
+    return this.http.delete(this.baseUrl + id + '/delete');
+  }
+
+  // Add a Movie to a Playlist
+  addMovie(playlistId:number, titleId: number) : Observable<any> {
+    return this.http.put(this.baseUrl + playlistId + '/add/' + titleId, {});
+  }
+
+  // Delete a Movie from a Playlist 
+  removeMovie(playlistId:number, titleId: number) : Observable<any> {
+    return this.http.put(this.baseUrl + playlistId + '/remove/' + titleId, {});
   }
 }

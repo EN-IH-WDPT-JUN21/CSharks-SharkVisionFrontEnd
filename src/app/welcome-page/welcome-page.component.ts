@@ -53,4 +53,10 @@ export class WelcomePageComponent implements OnInit {
       console.log(data);
     });
   }
+
+  deletePlaylist(){
+    this.playlistService.deletePlaylist(1).subscribe(data => {
+      console.log(data);
+    });
+  }
 }
