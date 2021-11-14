@@ -1,0 +1,49 @@
+.header {
+    display: flex;
+    justify-content: left;
+}
+
+.logo_img {
+    padding: 10px;
+    margin: 10px;
+    width: 30px;
+    height: 30px;
+}
+
+nav {
+    height: 30px;
+    width: 100%;
+    justify-content: right;
+}
+
+.menu {
+    background-color: #c9e0ed;
+    border-radius: 5px;
+    padding: 10px;
+    display: flex;
+    justify-content: right;
+}
+
+.menu li {
+    display: inline;
+    padding: 5px;
+}
+
+.menu-item {
+    font-size: 1em;
+    padding: 10px;
+    text-decoration: none;
+    color: #3e628e;
+}
+
+.menu-item:hover, .menu-item:focus {
+    border-left: 1px solid;
+    border-right: 1px solid;
+    color: #ff00ff;
+}
+
+.active {
+    border-left: 1px solid;
+    border-right: 1px solid;
+    color: #ff00ff;
+}

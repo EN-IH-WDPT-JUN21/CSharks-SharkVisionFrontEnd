@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Colour palette: 
+    #7843e6
+    #00ffff
+    #ff00ff (Shadows and highlights)
+    #3e628e
+    #c9e0ed
+    */
+
+body {
+    background-color: #3e628e;
+    color: #c9e0ed;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 14px;
+}
+

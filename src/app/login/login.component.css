@@ -1,0 +1,48 @@
+.login {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+img {
+    padding: 20px;
+    margin: 20px;
+    width: 20%;
+    height: 20%;
+}
+
+.login_input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.username, .password {
+    padding: 10px;
+    margin: 10px;
+}
+
+.button_container {
+    display: flex;
+    justify-content: space-between;
+}
+
+button {
+    padding: 10px;
+    margin: 10px;
+    background-color: #3E628E;	
+    color: #c9e0ed;
+    box-shadow: 2px 2px 2px 0px #FF00FF;
+    border-radius: 5px;
+}
+
+
+
