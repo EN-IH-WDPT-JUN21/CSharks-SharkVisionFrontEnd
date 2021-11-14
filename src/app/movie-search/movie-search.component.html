@@ -1,4 +1,12 @@
 <div class="movie_search">
+
+    <div class="logo">
+        <img src="https://www.pinclipart.com/picdir/big/48-482963_shark-logo-jpg-transparent-stock-sharlk-logo-clipart.png" alt="A blue, geometric shark on a transparent background">
+    </div>
+
+    <header class="welcome_header">
+        <h1>Search for a title, using a keyword</h1>
+    </header>
     
     <form (ngSubmit)="onSubmit()" [formGroup]="searchForm">
 
@@ -10,12 +18,18 @@
     </form>
 
     <div class="buttons">
-        <button class="submit" (click)="onSubmit()">Submit</button>
-        <button class="cancel" (click)="cancel()">Cancel</button>
+        <button mat-raised-button class="submit" (click)="onSubmit()">Submit</button>
+        <button mat-raised-button class="cancel" (click)="cancel()">Cancel</button>
     </div>
 
     <div class="result">
-        {{foundMovie[1]}}
+        <ul>
+            <li *ngFor="let movies of foundMovies">
+                <img [src]="movies.image">
+                <p>{{movies.title}} <br/>
+                {{movies.description}}</p>
+            </li>
+        </ul>
     </div>
 
 
