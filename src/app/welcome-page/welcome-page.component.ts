@@ -1,4 +1,3 @@
-import { Playlist } from './../models/playlist';
 import { UserService } from './../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { PlaylistService } from '../services/playlist.service';
@@ -56,6 +55,12 @@ export class WelcomePageComponent implements OnInit {
 
   deletePlaylist(){
     this.playlistService.deletePlaylist(1).subscribe(data => {
+      console.log(data);
+    });
+  }
+
+  removeMovie(){
+    this.playlistService.removeMovie(2, 103).subscribe(data => {
       console.log(data);
     });
   }
