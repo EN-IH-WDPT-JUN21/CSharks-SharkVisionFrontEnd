@@ -11,12 +11,6 @@
     padding-bottom: 20px;
 }
 
-.logo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 img {
     padding: 20px;
     margin: 20px;
@@ -30,7 +24,6 @@ button {
 
 .result ul {
     display: flex;
-    flex-wrap: wrap;
 }
 
 .result li {

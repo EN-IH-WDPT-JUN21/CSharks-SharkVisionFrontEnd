@@ -1,0 +1,43 @@
+.details {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #3e628e;
+    background-color: #3e628e;
+    padding: 20px;
+    margin: 10px;
+    margin-bottom: 100px;
+}
+
+.movie_details {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    margin: 10px;
+    width: 80%;
+    background-color: #c9e0ed;
+}
+
+.text {
+    display: flex;
+    justify-content: left;
+    text-align: left;
+    font-size: large;
+    padding: 10px;
+    margin: 10px;
+}
+
+img {
+    justify-content: center;
+    width: 50%;
+    padding: 10px;
+    margin: 10px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+

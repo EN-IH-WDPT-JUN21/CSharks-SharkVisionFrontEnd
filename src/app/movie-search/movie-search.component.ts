@@ -12,13 +12,16 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class MovieSearchComponent implements OnInit {
 
-  // @Input() movie!:MovieDetail;
+  @Input() movie!:Movie;
 
   searchForm:FormGroup;
 
   searchKeyword:FormControl;
 
   foundMovies:Movie[];
+
+  details:boolean;
+  movieDetail:Movie;
 
   constructor(private movieService:MovieService) {
     this.searchKeyword = new FormControl('');
@@ -28,6 +31,8 @@ export class MovieSearchComponent implements OnInit {
     })
 
     this.foundMovies = [];
+    this.details = false;
+    this.movieDetail = new Movie('','','','','');
    }
 
   ngOnInit(): void {
@@ -53,6 +58,11 @@ export class MovieSearchComponent implements OnInit {
 
   cancel() {
 
+  }
+
+  showDetail(movie:Movie) {
+    this.details = true;
+    this.movieDetail = movie;
   }
 
 }

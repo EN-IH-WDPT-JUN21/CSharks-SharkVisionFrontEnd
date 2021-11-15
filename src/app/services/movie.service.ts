@@ -19,6 +19,6 @@ export class MovieService {
   }
 
   getMovieById(id:string) : Observable<any> {
-    return this.http.get<any>(this.searchId + id);
+    return this.http.get<any>(this.searchId + id + "/FullActor,Posters");
   }
 }

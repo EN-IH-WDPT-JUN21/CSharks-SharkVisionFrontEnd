@@ -1,9 +1,5 @@
 <div class="movie_search">
 
-    <div class="logo">
-        <img src="https://www.pinclipart.com/picdir/big/48-482963_shark-logo-jpg-transparent-stock-sharlk-logo-clipart.png" alt="A blue, geometric shark on a transparent background">
-    </div>
-
     <header class="welcome_header">
         <h1>Search for a title, using a keyword</h1>
     </header>
@@ -22,14 +18,19 @@
         <button mat-raised-button class="cancel" (click)="cancel()">Cancel</button>
     </div>
 
-    <div class="result">
+    <div *ngIf="foundMovies.length > 0" class="result">
         <ul>
             <li *ngFor="let movies of foundMovies">
                 <img [src]="movies.image">
                 <p>{{movies.title}} <br/>
                 {{movies.description}}</p>
+                <button mat-raised-button class="details" (click)="showDetail(movies)">Show details...</button>
             </li>
         </ul>
+    </div>
+
+    <div class="show_details" *ngIf="details">
+        <app-movie-detail [movieDetail]="movieDetail" ></app-movie-detail>
     </div>
 
 
