@@ -16,5 +16,15 @@
         Recommend a movie.
     </button> -->
 
+    <div class="result">
+        <ul>
+            <li *ngFor="let movies of popularMovies | slice:0:9">
+                <img [src]="movies.image">
+                <p>{{movies.fullTitle}} <br/>
+                    {{movies.imDbRating}} <br/>
+            </li>
+        </ul>
+    </div>
+
 
 </div>

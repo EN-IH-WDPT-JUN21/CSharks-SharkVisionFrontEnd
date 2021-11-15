@@ -9,6 +9,7 @@ export class MovieService {
 
   readonly searchTitle:string = "https://imdb-api.com/en/API/SearchMovie/k_xmbw7o8f/";
   readonly searchId:string = "https://imdb-api.com/en/API/Title/k_xmbw7o8f/";
+  readonly popMovies:string = "https://imdb-api.com/en/API/MostPopularMovies/k_xmbw7o8f";
 
   constructor(
     private http:HttpClient
@@ -20,5 +21,9 @@ export class MovieService {
 
   getMovieById(id:string) : Observable<any> {
     return this.http.get<any>(this.searchId + id + "/FullActor,Posters");
+  }
+
+  getPopularMovies() : Observable<any> {
+    return this.http.get<any>(this.popMovies);
   }
 }
