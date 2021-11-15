@@ -1,4 +1,7 @@
+import { MovieDetail } from './../models/movieDetail.model';
+import { MovieService } from './../services/movie.service';
 import { Component, OnInit } from '@angular/core';
+import { PopularMovieResponse } from '../models/popularMovie.model';
 
 @Component({
   selector: 'app-welcome-page',
@@ -7,9 +10,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WelcomePageComponent implements OnInit {
 
-  constructor() { }
+  popularMovies: MovieDetail[];
+
+  constructor(private movieService: MovieService) {
+    this.popularMovies = [];
+   }
 
   ngOnInit(): void {
+    this.popularMovies = [];
+    this.movieService.getPopularMovies().subscribe(item => {
+        const popMovieResponse: PopularMovieResponse = item;
+        console.log(popMovieResponse.results);
+        var i = 0;
+        for ( let movie of popMovieResponse.results) {
+          const id:string = popMovieResponse.results[i].id;
+          const title:string = popMovieResponse.results[i].fullTitle;
+          const image:string = popMovieResponse.results[i].image;
+          const imDbRating:string = popMovieResponse.results[i].imDbRating;
+          let movie = new MovieDetail(id,title,'',image,'','','','','',imDbRating);
+          this.popularMovies.push(movie);
+          i++;
+        }}
+    )
   }
+
 
 }

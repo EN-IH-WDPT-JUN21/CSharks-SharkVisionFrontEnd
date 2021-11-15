@@ -1,5 +1,8 @@
-import { Movie } from './../models/movie.model';
+import { MovieDetail } from './../models/movieDetail.model';
+import { MovieService } from './../services/movie.service';
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Movie } from '../models/movie.model';
 
 @Component({
   selector: 'app-movie-detail',
@@ -8,11 +11,32 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class MovieDetailComponent implements OnInit {
 
-  @Input() movie!:Movie;
+  @Input () movieDetail!: Movie;
+  foundMovie: MovieDetail;
 
-  constructor() { }
+  constructor(
+    private router:Router,
+    private activatedRoute:ActivatedRoute,
+    private movieService:MovieService) {
+      this.foundMovie = new MovieDetail('','','','','','','','','','');
+   }
 
   ngOnInit(): void {
+    const movieId:string = this.activatedRoute.snapshot.params['movieDetail'];
+
+    this.movieService.getMovieById(this.movieDetail.id).subscribe(
+      result => {
+        this.foundMovie = result;
+      }
+    )
+  }
+
+  sentToHome():void {
+    this.router.navigate(['/search']);
+  }
+
+  addToPlayList():void {
+
   }
 
 }
