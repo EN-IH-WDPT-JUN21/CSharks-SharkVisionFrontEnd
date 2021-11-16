@@ -1,27 +1,33 @@
 <div class="header">
 
-    <div class="logo">
-        <img class="logo_img" src="https://www.pinclipart.com/picdir/big/48-482963_shark-logo-jpg-transparent-stock-sharlk-logo-clipart.png" alt="A blue, geometric shark on a transparent background">
-    </div>
+  <div class="logo">
+    <img class="logo_img"
+      src="https://www.pinclipart.com/picdir/big/48-482963_shark-logo-jpg-transparent-stock-sharlk-logo-clipart.png"
+      alt="A blue, geometric shark on a transparent background">
+  </div>
 
-    <nav class="navigation">
-        <ul class="menu">
-            <li>
-                <a class="menu-item" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a>
-            </li>
-            <li>
-                <a class="menu-item" routerLink="/search" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Search</a>
-            </li>
-            <li>
-                <a class="menu-item" routerLink="/user" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">My Profile</a>
-            </li>
-            <li>
-                <a class="menu-item" routerLink="/register" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Register</a>
-            </li>
-            <li>
-                <a class="menu-item" routerLink="/login" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Login</a>
-            </li>
-        </ul>
-    </nav>
+  <nav class="navigation">
+    <ul class="menu">
+      <li>
+        <a class="menu-item" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a>
+      </li>
+      <li>
+        <a class="menu-item" routerLink="/search" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Search</a>
+      </li>
+      <li *ngIf="isLoggedIn">
+        <a class="menu-item" routerLink="/user" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">My Profile</a>
+      </li>
+      <li *ngIf="!isLoggedIn">
+        <a class="menu-item" routerLink="/login" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">SignIn</a>
+      </li>
+
+      <li *ngIf="isLoggedIn">
+        <a class="menu-item" routerLink="/login" (click)="logout()"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact:true}">Logout</a>
+      </li>
+
+    </ul>
+  </nav>
 
 </div>

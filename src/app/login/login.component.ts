@@ -1,5 +1,5 @@
 import { AuthService } from './../services/auth.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -9,8 +9,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  isRegister: boolean = false;
-  isLoginError: boolean = false;
+  isRegister = false;
+  isLoginError = false;
+  isLoggedIn = false;
   loginForm: FormGroup;
   username: FormControl;
   password: FormControl;
@@ -25,6 +26,11 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.auth.loggedIn.subscribe(loggedIn => this.isLoggedIn = loggedIn);
+    if (this.isLoggedIn) {
+      this.router.navigate(['/home']);
+      return;
+    }
   }
 
   performLogin(): void {
@@ -34,9 +40,9 @@ export class LoginComponent implements OnInit {
     if (formData.username && formData.password) {
       this.auth.login(formData.username, formData.password)
         .subscribe(() => {
-          console.log("login success");
+          console.log("Login success!");
           this.router.navigate(['/user']);
-          this.loginForm.reset();
+          return;
         });
 
       this.loginForm.setValue({ username: formData.username, password: '' });
@@ -44,10 +50,18 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  register(): void {
-    console.log("register");
+  goToRegister(): void {
     this.isRegister = true;
     this.loginForm.reset();
+  }
+
+  goToLogin(isRegister: boolean): void {
+    this.isRegister = isRegister;
+    this.loginForm.reset();
+  }
+
+  setUsername(username: string): void {
+    this.username.setValue(username);
   }
 
 }

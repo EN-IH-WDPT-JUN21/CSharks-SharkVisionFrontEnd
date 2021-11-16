@@ -2,6 +2,7 @@ import { shareReplay, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as moment from 'moment';
+import { ReplaySubject, Subject } from 'rxjs';
 
 
 @Injectable({
@@ -9,6 +10,7 @@ import * as moment from 'moment';
 })
 export class AuthService {
   private readonly baseUrl = "http://localhost:8000"
+  loggedIn: Subject<boolean> = new ReplaySubject<boolean>(1);
 
   constructor(private http: HttpClient) { }
 
@@ -30,25 +32,31 @@ export class AuthService {
 
     localStorage.setItem('access_token', authResult.access_token);
     localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
-    console.log(localStorage.getItem("access_token"));
-    console.log(localStorage.getItem("expires_at"));
+    this.isLoggedIn();
   }
 
   logout() {
     localStorage.removeItem("access_token");
     localStorage.removeItem("expires_at");
-    console.log(localStorage.getItem("access_token"));
-    console.log(localStorage.getItem("access_token"));
+
+    this.isLoggedIn();
   }
 
   public isLoggedIn(): boolean {
-    console.log(localStorage.getItem("access_token"));
-    console.log(localStorage.getItem("expires_at"));
     if (localStorage.getItem("access_token") == null ||
-      localStorage.getItem("expires_at") == null)
+      localStorage.getItem("expires_at") == null) {
+      this.loggedIn.next(false);
       return false;
-
-    return moment().isBefore(this.getExpiration());
+    }
+    const isLogin = moment().isBefore(this.getExpiration());
+    if (isLogin) {
+      this.loggedIn.next(true);
+      return true;
+    } else {
+      this.logout();
+      this.loggedIn.next(false);
+      return false;
+    }
   }
 
   getExpiration() {
@@ -56,6 +64,5 @@ export class AuthService {
     const expiresAt = JSON.parse(expiration || "0");
     return moment(expiresAt);
   }
-
 
 }
