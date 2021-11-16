@@ -22,6 +22,8 @@ export class MovieSearchComponent implements OnInit {
   details:boolean;
   movieDetail:Movie;
 
+  isLoggedIn: boolean;
+
   constructor(private movieService:MovieService) {
     this.searchKeyword = new FormControl('');
 
@@ -32,9 +34,11 @@ export class MovieSearchComponent implements OnInit {
     this.foundMovies = [];
     this.details = false;
     this.movieDetail = new Movie('','','','','');
+    this.isLoggedIn = false;
    }
 
   ngOnInit(): void {
+    this.isLoggedIn = this.checkLoggedIn();
   }
 
   onSubmit() : void {
@@ -72,6 +76,10 @@ export class MovieSearchComponent implements OnInit {
 
   addToPlayList() {
 
+  }
+
+  checkLoggedIn():boolean {
+    return false;
   }
 
 }
