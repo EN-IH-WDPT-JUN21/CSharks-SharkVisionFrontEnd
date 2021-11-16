@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth.service';
 import { MovieDetail } from './../models/movieDetail.model';
 import { MovieService } from './../services/movie.service';
 import { Component, OnInit } from '@angular/core';
@@ -9,14 +10,16 @@ import { PopularMovieResponse } from '../models/popularMovie.model';
   styleUrls: ['./welcome-page.component.css']
 })
 export class WelcomePageComponent implements OnInit {
-
+isLoggedIn = false;
   popularMovies: MovieDetail[];
 
-  constructor(private movieService: MovieService) {
+  constructor(private auth: AuthService, private movieService: MovieService) {
     this.popularMovies = [];
    }
 
   ngOnInit(): void {
+    if (this.auth.isLoggedIn()) this.isLoggedIn = true;
+    
     this.popularMovies = [];
     this.movieService.getPopularMovies().subscribe(item => {
         const popMovieResponse: PopularMovieResponse = item;

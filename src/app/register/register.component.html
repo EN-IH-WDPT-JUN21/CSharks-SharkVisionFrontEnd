@@ -1,32 +1,53 @@
-<div class="register">
-
-    <div class="logo">
-        <img src="https://www.pinclipart.com/picdir/big/48-482963_shark-logo-jpg-transparent-stock-sharlk-logo-clipart.png" alt="A blue, geometric shark on a transparent background">
-    </div>
+<form class="register" (ngSubmit)="register()" [formGroup]="registerForm">
 
     <div class="register_input">
         <legend>Register:</legend>
         <div>
-            <input class="username" type="username" placeholder="Username">
-            <!-- <p class="error_msg" *ngIf="username.invalid && username.touched">That username already exists, please select another one</p> -->
-        </div>
-        <div>
-            <input class="email" type="email" placeholder="Email">
-            <!-- <p class="error_msg" *ngIf="email.invalid && email.touched">Please enter a valid email</p> -->
-        </div>
-        <div>
-            <input class="password" type="password" placeholder="Password..." formControlName="password">
-            <!-- <p class="error_msg" *ngIf="password.invalid && password.touched">Please enter a valid password</p> -->
+            <input class="username" type="username" placeholder="Username" formControlName="username">
+            <p class="error_msg" *ngIf="username.hasError('required') && username.touched">
+                Username is required!
+            </p>
+            <p class="error_msg" *ngIf="username.hasError('minlength') && username.touched">
+                Username must be at least 3 characters long!
+            </p>
+            <p class="error_msg" *ngIf="!isValidUsername && username.valid">
+                Username is already taken!
+            </p>
         </div>
 
         <div>
-            <input class="passwordConfirmation" type="password" placeholder="Password confirmation..." formControlName="passwordConfirmation">
-            <!-- <p class="error_msg" *ngIf="passwordConfirmation.invalid && passwordConfirmation.touched">Passwords must match</p> -->
+            <input class="email" type="email" placeholder="Email" formControlName="email">
+            <p class="error_msg" *ngIf="email.hasError('required') && (email.dirty)">
+                Email is required!
+            </p>
+            <p class="error_msg" *ngIf="email.hasError('email') && (email.dirty)">
+                Email is not valid!
+            </p>
+            <p class="error_msg" *ngIf="!isValidEmail && email.valid">
+                Email is already taken!
+            </p>
+        </div>
+
+        <div>
+            <input class="password" type="password" placeholder="Password" formControlName="password">
+            <p class="error_msg" *ngIf="password.hasError('required') && (password.dirty)">
+                Password is required!
+            </p>
+            <p class="error_msg" *ngIf="password.hasError('minlength')&& (password.dirty)">
+                Password must be at least 6 characters long!
+            </p>
+        </div>
+
+        <div>
+            <input class="passwordConfirmation" type="password" placeholder="Password confirmation" formControlName="passwordConfirmation">
+            <p class="error_msg" *ngIf="registerForm.hasError('differentPassword') && (passwordConfirmation.dirty)">
+                Passwords do not match!
+            </p>
         </div>
     </div>
 
     <div class="register_container">
         <button class="back_button" (click)="back()">Back</button>
-        <button class="register_button" (click)="register()">Register</button>
-    </div>  
-</div>
+        <button class="register_button" type="submit" [disabled]="registerForm.invalid">Register</button>
+    </div>
+</form>

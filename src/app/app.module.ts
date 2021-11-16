@@ -1,3 +1,4 @@
+import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -9,7 +10,7 @@ import { UserPlaylistComponent } from './user-playlist/user-playlist.component';
 import { MovieSearchComponent } from './movie-search/movie-search.component';
 import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 import { RegisterComponent } from './register/register.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -49,7 +50,9 @@ import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
