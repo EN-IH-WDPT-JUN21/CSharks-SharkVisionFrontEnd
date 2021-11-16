@@ -18,15 +18,14 @@ export class WelcomePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.popularMovies = [];
-    this.movieService.getPopularMovies().subscribe(item => {
-        const popMovieResponse: PopularMovieResponse = item;
-        console.log(popMovieResponse.results);
+    this.movieService.getPopularMovies().subscribe(result => {
+        const popMovieResponse: PopularMovieResponse = result;
         var i = 0;
-        for ( let movie of popMovieResponse.results) {
-          const id:string = popMovieResponse.results[i].id;
-          const title:string = popMovieResponse.results[i].fullTitle;
-          const image:string = popMovieResponse.results[i].image;
-          const imDbRating:string = popMovieResponse.results[i].imDbRating;
+        for ( let movie of popMovieResponse.items) {
+          const id:string = popMovieResponse.items[i].id;
+          const title:string = popMovieResponse.items[i].fullTitle;
+          const image:string = popMovieResponse.items[i].image;
+          const imDbRating:string = popMovieResponse.items[i].imDbRating;
           let movie = new MovieDetail(id,title,'',image,'','','','','',imDbRating);
           this.popularMovies.push(movie);
           i++;

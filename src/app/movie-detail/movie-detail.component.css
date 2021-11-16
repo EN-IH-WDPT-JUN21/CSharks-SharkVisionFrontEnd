@@ -4,7 +4,6 @@
     align-items: center;
     flex-direction: column;
     color: #3e628e;
-    background-color: #c9e0ed;
     margin: 10px;
     width: 100%;
 }
@@ -32,6 +31,7 @@
 .poster img {
     justify-content: center;
     width: 60%;
+    height: 60%;
     padding: 10px;
     margin: 10px;
 }

@@ -9,12 +9,13 @@
         <mat-form-field class="example-will-width" appearance="fill">
             <mat-label>Keyword</mat-label>
             <input type="text" matInput formControlName="searchKeyword" placeholder="Search by keyword...">
+            <mat-hint align="start">Why not try banana?</mat-hint>
         </mat-form-field>
 
     </form>
 
     <div class="buttons">
-        <button mat-raised-button class="submit" (click)="onSubmit()">Submit</button>
+        <button mat-raised-button class="submit" (click)="onSubmit()" [disabled]="searchKeyword.untouched && searchKeyword.pristine">Submit</button>
         <button mat-raised-button class="cancel" (click)="cancel()">Cancel</button>
     </div>
 

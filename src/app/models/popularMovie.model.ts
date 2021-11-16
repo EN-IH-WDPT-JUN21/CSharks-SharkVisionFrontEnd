@@ -1,4 +1,6 @@
 export class PopularMovieResponse {
+    items: any;
+    
     public get results(): MovieDetailInfo[] {
         return this._results;
     }
@@ -12,8 +14,8 @@ export class PopularMovieResponse {
 }
 
 interface MovieDetailInfo {
-    id:string,
-    fullTitle:string,
-    image:string,
-    imDbRating:string
+        id:string,
+        fullTitle:string,
+        image:string,
+        imDbRating:string
 }
