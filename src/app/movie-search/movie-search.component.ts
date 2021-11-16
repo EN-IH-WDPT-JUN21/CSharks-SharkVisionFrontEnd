@@ -12,7 +12,6 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class MovieSearchComponent implements OnInit {
 
-  @Input() movie!:Movie;
 
   searchForm:FormGroup;
 
@@ -57,12 +56,22 @@ export class MovieSearchComponent implements OnInit {
   }
 
   cancel() {
+    this.searchForm.reset();
+    this.foundMovies = [];
+    this.details = false;
+  }
 
+  back() {
+    this.details = false;
   }
 
   showDetail(movie:Movie) {
     this.details = true;
     this.movieDetail = movie;
+  }
+
+  addToPlayList() {
+
   }
 
 }

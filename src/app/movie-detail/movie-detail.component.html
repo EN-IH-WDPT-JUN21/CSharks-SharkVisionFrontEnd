@@ -1,18 +1,17 @@
 <div class="details">
     <div class="movie_details" [routerLink] = "['/search',movieDetail]" >
-        <img [src]="foundMovie.image">
+        <img class="poster" [src]="foundMovie.image">
         <div class="text">
-            Full title: {{foundMovie.fullTitle}} <br />
-            Year: {{foundMovie.year}},  Release Date: {{foundMovie.releaseDate}} <br />
-            Content Rating: {{foundMovie.contentRating}} <br />
-            imDb Rating: {{foundMovie.imDbRating}} <br />
-            Plot: {{foundMovie.plot}} <br />
-            Awards: {{foundMovie.awards}} <br />
-            Genres: {{foundMovie.genres}} <br />
+            <h2 class="description">
+                Full title: {{foundMovie.fullTitle}} <br />
+                Year: {{foundMovie.year}},  Release Date: {{foundMovie.releaseDate}} <br />
+                Content Rating: {{foundMovie.contentRating}} <br />
+                imDb Rating: {{foundMovie.imDbRating}} <br />
+                Plot: <br />
+                    {{foundMovie.plot}} <br />
+                Awards: {{foundMovie.awards}} <br />
+                Genres: {{foundMovie.genres}} <br />
+            </h2>
         </div>
-    </div>
-
-    <div class="buttons">
-        <button mat-raised-button class="add" (click)="addToPlayList()">Add to Playlist...</button>
     </div>
 </div>
