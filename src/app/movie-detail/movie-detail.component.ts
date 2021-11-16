@@ -31,12 +31,10 @@ export class MovieDetailComponent implements OnInit {
     )
   }
 
-  sentToHome():void {
+  back():void {
     this.router.navigate(['/search']);
   }
 
-  addToPlayList():void {
 
-  }
 
 }

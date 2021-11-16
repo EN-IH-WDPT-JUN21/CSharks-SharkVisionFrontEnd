@@ -3,35 +3,42 @@
     <header class="welcome_header">
         <h1>Search for a title, using a keyword</h1>
     </header>
-    
+
     <form (ngSubmit)="onSubmit()" [formGroup]="searchForm">
 
         <mat-form-field class="example-will-width" appearance="fill">
             <mat-label>Keyword</mat-label>
             <input type="text" matInput formControlName="searchKeyword" placeholder="Search by keyword...">
+            <mat-hint align="start">Why not try banana?</mat-hint>
         </mat-form-field>
 
     </form>
 
     <div class="buttons">
-        <button mat-raised-button class="submit" (click)="onSubmit()">Submit</button>
+        <button mat-raised-button class="submit" (click)="onSubmit()" [disabled]="searchKeyword.untouched && searchKeyword.pristine">Submit</button>
         <button mat-raised-button class="cancel" (click)="cancel()">Cancel</button>
     </div>
 
-    <div *ngIf="foundMovies.length > 0" class="result">
-        <ul>
-            <li *ngFor="let movies of foundMovies">
-                <img [src]="movies.image">
-                <p>{{movies.title}} <br/>
-                {{movies.description}}</p>
-                <button mat-raised-button class="details" (click)="showDetail(movies)">Show details...</button>
-            </li>
-        </ul>
-    </div>
+    <div class="movie_details">
 
-    <div class="show_details" *ngIf="details">
-        <app-movie-detail [movieDetail]="movieDetail" ></app-movie-detail>
-    </div>
+        <div *ngIf="foundMovies.length > 0" class="result">
+            <ul>
+                <li *ngFor="let movies of foundMovies">
+                    <a class="details" (click)="showDetail(movies)">
+                    <h3>{{movies.title}} <br />
+                        {{movies.description}}</h3>
+                    </a>
+                </li>
+            </ul>
+        </div>
 
+        <div class="show_details" *ngIf="details">
+            <app-movie-detail [movieDetail]="movieDetail"></app-movie-detail>
+            <div class="buttons">
+                <button mat-raised-button class="add" (click)="addToPlayList()">Add to Playlist...</button>
+                <button mat-raised-button class="back" (click)="back()">Back</button>
+            </div>
+        </div>
+    </div>
 
 </div>
