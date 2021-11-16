@@ -8,6 +8,7 @@
     #c9e0ed
     */
 
+    
 body {
     background-color: #3e628e;
     color: #c9e0ed;
@@ -15,3 +16,6 @@ body {
     font-size: 14px;
 }
 
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

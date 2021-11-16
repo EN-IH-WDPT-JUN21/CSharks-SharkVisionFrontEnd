@@ -1,6 +1,8 @@
 import { AuthService } from './../services/auth.service';
-import { HttpClient } from '@angular/common/http';
+import { MovieDetail } from './../models/movieDetail.model';
+import { MovieService } from './../services/movie.service';
 import { Component, OnInit } from '@angular/core';
+import { PopularMovieResponse } from '../models/popularMovie.model';
 
 @Component({
   selector: 'app-welcome-page',
@@ -8,44 +10,32 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./welcome-page.component.css']
 })
 export class WelcomePageComponent implements OnInit {
+isLoggedIn = false;
+  popularMovies: MovieDetail[];
 
-  response = "";
-  isLoggedIn = false;
-
-  constructor(private http: HttpClient, private auth: AuthService) { }
+  constructor(private auth: AuthService, private movieService: MovieService) {
+    this.popularMovies = [];
+   }
 
   ngOnInit(): void {
     if (this.auth.isLoggedIn()) this.isLoggedIn = true;
-  }
-
-  getUser1() {
-    this.http.get("http://localhost:8000/movie-app/users/1").subscribe(
-      (response) => { this.response = JSON.stringify(response) }
+    
+    this.popularMovies = [];
+    this.movieService.getPopularMovies().subscribe(item => {
+        const popMovieResponse: PopularMovieResponse = item;
+        console.log(popMovieResponse.results);
+        var i = 0;
+        for ( let movie of popMovieResponse.results) {
+          const id:string = popMovieResponse.results[i].id;
+          const title:string = popMovieResponse.results[i].fullTitle;
+          const image:string = popMovieResponse.results[i].image;
+          const imDbRating:string = popMovieResponse.results[i].imDbRating;
+          let movie = new MovieDetail(id,title,'',image,'','','','','',imDbRating);
+          this.popularMovies.push(movie);
+          i++;
+        }}
     )
   }
 
-  getUser2() {
-    this.http.get("http://localhost:8000/movie-app/users/2").subscribe(
-      (response) => { this.response = JSON.stringify(response) }
-    )
-  }
-
-  getUser3() {
-    this.http.get("http://localhost:8000/movie-app/users/3").subscribe(
-      (response) => { this.response = JSON.stringify(response) }
-    )
-  }
-
-  getAdmin() {
-    this.http.get("http://localhost:8000/movie-app/users/4").subscribe(
-      (response) => { this.response = JSON.stringify(response) }
-    )
-  }
-
-  getAll() {
-    this.http.get("http://localhost:8000/movie-app/users/all").subscribe(
-      (response) => { this.response = JSON.stringify(response) }
-    )
-  }
 
 }

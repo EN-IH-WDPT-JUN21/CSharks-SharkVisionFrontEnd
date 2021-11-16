@@ -1,1 +1,37 @@
-<p>movie-search works!</p>
+<div class="movie_search">
+
+    <header class="welcome_header">
+        <h1>Search for a title, using a keyword</h1>
+    </header>
+    
+    <form (ngSubmit)="onSubmit()" [formGroup]="searchForm">
+
+        <mat-form-field class="example-will-width" appearance="fill">
+            <mat-label>Keyword</mat-label>
+            <input type="text" matInput formControlName="searchKeyword" placeholder="Search by keyword...">
+        </mat-form-field>
+
+    </form>
+
+    <div class="buttons">
+        <button mat-raised-button class="submit" (click)="onSubmit()">Submit</button>
+        <button mat-raised-button class="cancel" (click)="cancel()">Cancel</button>
+    </div>
+
+    <div *ngIf="foundMovies.length > 0" class="result">
+        <ul>
+            <li *ngFor="let movies of foundMovies">
+                <img [src]="movies.image">
+                <p>{{movies.title}} <br/>
+                {{movies.description}}</p>
+                <button mat-raised-button class="details" (click)="showDetail(movies)">Show details...</button>
+            </li>
+        </ul>
+    </div>
+
+    <div class="show_details" *ngIf="details">
+        <app-movie-detail [movieDetail]="movieDetail" ></app-movie-detail>
+    </div>
+
+
+</div>
