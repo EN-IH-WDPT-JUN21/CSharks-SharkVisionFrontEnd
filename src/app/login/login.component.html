@@ -1,17 +1,33 @@
 <div class="login">
 
-    <div class="logo">
-        <img src="https://www.pinclipart.com/picdir/big/48-482963_shark-logo-jpg-transparent-stock-sharlk-logo-clipart.png" alt="A blue, geometric shark on a transparent background">
-    </div>
+  <div class="logo">
+    <img
+      src="https://www.pinclipart.com/picdir/big/48-482963_shark-logo-jpg-transparent-stock-sharlk-logo-clipart.png"
+      alt="A blue, geometric shark on a transparent background">
+  </div>
 
-    <div class="login_input">
-        <legend>Login:</legend>
-        <input class="username" type="username" placeholder="Username">
-        <input class="password" type="password" placeholder="Password">
-    </div>
+  <ng-container *ngIf="isRegister; else login">
 
-    <div class="button_container">
-        <button class="login_button" (click)="login()">Login</button>
-        <button class="register_button" (click)="register()">Register</button>
-    </div>  
+  </ng-container>
+
+  <ng-template #login>
+
+    <form class="form-section" (ngSubmit)="performLogin()" [formGroup]="loginForm">
+        <div class="login_input">
+          <legend>Login:</legend>
+          <input class="username" type="username" formControlName="username" placeholder="Username">
+          <input class="password" type="password" formControlName="password" placeholder="Password">
+        </div>
+        <div class="button_container">
+          <button class="login_button" type="submit">Login</button>
+          <button ngSubmit class="register_button" (click)="register()">Register</button>
+        </div>
+        <div class="error_container">
+          <p class="error_message" *ngIf="isLoginError" >Login failed!</p>
+        </div>
+    </form>
+  </ng-template>
+
+
+
 </div>
