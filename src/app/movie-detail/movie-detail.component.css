@@ -1,22 +1,17 @@
 .details {
     display:flex;
-    justify-content: center;
+    justify-content: right;
     align-items: center;
     flex-direction: column;
     color: #3e628e;
-    background-color: #3e628e;
-    padding: 20px;
     margin: 10px;
-    margin-bottom: 100px;
+    width: 100%;
 }
 
 .movie_details {
     display: flex;
     justify-content: center;
-    padding: 10px;
-    margin: 10px;
-    width: 80%;
-    background-color: #c9e0ed;
+    width: 75%;
 }
 
 .text {
@@ -26,11 +21,17 @@
     font-size: large;
     padding: 10px;
     margin: 10px;
+    width: 50%
 }
 
-img {
-    justify-content: center;
+.poster {
     width: 50%;
+}
+
+.poster img {
+    justify-content: center;
+    width: 60%;
+    height: 60%;
     padding: 10px;
     margin: 10px;
 }

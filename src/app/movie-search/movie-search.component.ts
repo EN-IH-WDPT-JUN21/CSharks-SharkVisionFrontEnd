@@ -12,7 +12,6 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class MovieSearchComponent implements OnInit {
 
-  @Input() movie!:Movie;
 
   searchForm:FormGroup;
 
@@ -22,6 +21,8 @@ export class MovieSearchComponent implements OnInit {
 
   details:boolean;
   movieDetail:Movie;
+
+  isLoggedIn: boolean;
 
   constructor(private movieService:MovieService) {
     this.searchKeyword = new FormControl('');
@@ -33,9 +34,11 @@ export class MovieSearchComponent implements OnInit {
     this.foundMovies = [];
     this.details = false;
     this.movieDetail = new Movie('','','','','');
+    this.isLoggedIn = false;
    }
 
   ngOnInit(): void {
+    this.isLoggedIn = this.checkLoggedIn();
   }
 
   onSubmit() : void {
@@ -57,12 +60,26 @@ export class MovieSearchComponent implements OnInit {
   }
 
   cancel() {
+    this.searchForm.reset();
+    this.foundMovies = [];
+    this.details = false;
+  }
 
+  back() {
+    this.details = false;
   }
 
   showDetail(movie:Movie) {
     this.details = true;
     this.movieDetail = movie;
+  }
+
+  addToPlayList() {
+
+  }
+
+  checkLoggedIn():boolean {
+    return false;
   }
 
 }

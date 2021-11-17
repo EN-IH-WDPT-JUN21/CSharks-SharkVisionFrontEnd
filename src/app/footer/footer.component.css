@@ -8,7 +8,5 @@ div {
     color: #c9e0ed;
     position: fixed;
     bottom: -10px;
-    display: flex;
-    justify-content: center;
     font-size: 70%;
 }

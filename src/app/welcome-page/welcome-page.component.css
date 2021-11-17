@@ -19,14 +19,18 @@ img {
     height: 20%;
 }
 
+.result {
+    margin-top: 50px;
+}
+
 .result ul {
     display: flex;
+    background-color: #c9e0ed;
 }
 
 .result li {
     list-style: none;
     width: 25%;
-    background-color: #c9e0ed;
     color: #7843e6;
     padding: 10px;
     margin: 10px;
@@ -46,4 +50,25 @@ img {
 .result p {
     text-align: left;
     margin: 5px;
+}
+
+.result h3 {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+    margin: 10px;
+}
+
+.welcome_main {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.button {
+    margin:10px;
+    width: 20%;
 }

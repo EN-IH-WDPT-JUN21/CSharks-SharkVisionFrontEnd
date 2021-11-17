@@ -1,28 +1,38 @@
 <div class="welcome">
 
-  <div class="logo">
-    <img
-      src="https://www.pinclipart.com/picdir/big/48-482963_shark-logo-jpg-transparent-stock-sharlk-logo-clipart.png"
-      alt="A blue, geometric shark on a transparent background">
-  </div>
+    <div class="logo">
+        <img src="assets\cshark.png" alt="A blue, geometric shark on a transparent background">
+    </div>
 
   <header class="welcome_header">
     <h1>Welcome to Sharkvision!</h1>
   </header>
 
-  <section class="welcome_main">
-  </section>
+    <section class="welcome_main">
+        <h3>
+            Sharkvision is your new favourite movie hub.
+
+            Search for a film, create a playlist and add your favourites.
+
+            New to Sharkvision? Register for an account here:
+        </h3>
+        <div class="buttons">
+            <button mat-raised-button class="register">Register</button>
+        </div>
+    </section>
 
     <!-- <button (click)="randomMovie()">
         Recommend a movie.
     </button> -->
 
     <div class="result">
+        <h2>Top 10 Movies</h2>
+
         <ul>
             <li *ngFor="let movies of popularMovies | slice:0:9">
                 <img [src]="movies.image">
                 <p>{{movies.fullTitle}} <br/>
-                    {{movies.imDbRating}} <br/>
+                Rating: {{movies.imDbRating}} <br/></p>
             </li>
         </ul>
     </div>
