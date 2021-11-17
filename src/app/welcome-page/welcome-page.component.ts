@@ -10,11 +10,15 @@ import { PopularMovieResponse } from '../models/popularMovie.model';
   styleUrls: ['./welcome-page.component.css']
 })
 export class WelcomePageComponent implements OnInit {
-isLoggedIn = false;
+  isLoggedIn = false;
   popularMovies: MovieDetail[];
+  randomMovie:MovieDetail;
+  showDetail:boolean;
 
   constructor(private auth: AuthService, private movieService: MovieService) {
     this.popularMovies = [];
+    this.randomMovie = new MovieDetail('','','','','','','','','','');
+    this.showDetail = false; 
    }
 
   ngOnInit(): void {
@@ -34,6 +38,24 @@ isLoggedIn = false;
           i++;
         }}
     )
+  }
+
+  randomMovieGenerator() :void {
+    var index = Math.floor(Math.random() * (99 + 1));
+    this.movieService.getMovieById(this.popularMovies[index].id).subscribe(
+      result => {
+        this.randomMovie = result;
+      }
+    )
+    this.showDetail = true;
+  }
+
+  addToPlayList():void {
+
+  }
+
+  back():void {
+    this.showDetail = false;
   }
 
 

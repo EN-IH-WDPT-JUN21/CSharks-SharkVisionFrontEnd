@@ -35,7 +35,7 @@
         <div class="show_details" *ngIf="details">
             <app-movie-detail [movieDetail]="movieDetail"></app-movie-detail>
             <div class="buttons">
-                <button mat-raised-button class="add" (click)="addToPlayList()">Add to Playlist...</button>
+                <button mat-raised-button class="add" (click)="addToPlayList()" *ngIf="isLoggedIn">Add to Playlist...</button>
                 <button mat-raised-button class="back" (click)="back()">Back</button>
             </div>
         </div>

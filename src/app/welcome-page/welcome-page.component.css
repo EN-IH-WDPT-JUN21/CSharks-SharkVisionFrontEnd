@@ -52,7 +52,7 @@ img {
     margin: 5px;
 }
 
-.result h3 {
+.result h2 {
     display: flex;
     justify-content: center;
     text-align: center;
@@ -68,7 +68,18 @@ img {
     text-align: center;
 }
 
-.button {
-    margin:10px;
-    width: 20%;
+.result_buttons {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+.randomMovie{
+    margin:20px;
+    display: flex;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 5px;
 }

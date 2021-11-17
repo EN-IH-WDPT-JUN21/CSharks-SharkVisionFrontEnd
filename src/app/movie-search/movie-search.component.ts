@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth.service';
 import { MovieDetail } from './../models/movieDetail.model';
 import { FoundMovieResponse } from './../models/foundMovie.model';
 import { MovieService } from './../services/movie.service';
@@ -24,7 +25,8 @@ export class MovieSearchComponent implements OnInit {
 
   isLoggedIn: boolean;
 
-  constructor(private movieService:MovieService) {
+  constructor(private movieService:MovieService,
+    private authService:AuthService) {
     this.searchKeyword = new FormControl('');
 
     this.searchForm = new FormGroup({
@@ -75,11 +77,11 @@ export class MovieSearchComponent implements OnInit {
   }
 
   addToPlayList() {
-
+    
   }
 
   checkLoggedIn():boolean {
-    return false;
+    return this.authService.isLoggedIn();
   }
 
 }

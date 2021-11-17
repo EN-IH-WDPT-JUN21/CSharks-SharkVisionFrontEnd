@@ -22,6 +22,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import { RandomMovieDetailComponent } from './random-movie-detail/random-movie-detail.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
     RegisterComponent,
     WelcomePageComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    RandomMovieDetailComponent
   ],
   imports: [
     BrowserModule,
