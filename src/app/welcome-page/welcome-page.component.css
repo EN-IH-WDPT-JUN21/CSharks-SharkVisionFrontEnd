@@ -74,12 +74,30 @@ img {
     margin: 10px;
 }
 
-.randomMovie{
-    margin:20px;
-    display: flex;
+button {
+    margin: 10px;
+    height: 50px;
+}
+
+.random_movie {
+    margin: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     border-radius: 5px;
+}
+
+.dropdown-content li {
+    list-style-type: none;
+    color: #7843e6;
+}
+
+.add_to {
+    font-size: small;
+    display: flex;
+    justify-content: center;
+    padding: 2px;
+    margin: 2px;
+    height: fit-content;
 }

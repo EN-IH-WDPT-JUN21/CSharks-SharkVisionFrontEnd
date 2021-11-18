@@ -20,7 +20,6 @@ export class UserService {
     return this.http.post<any>(this.baseUrl + "/register", body);
   }
 
-
   checkUsernameExists(username: string): Observable<boolean> {
     const body = { "username": username };
     return this.http.post<any>(this.baseUrl + "/validate/username", body);

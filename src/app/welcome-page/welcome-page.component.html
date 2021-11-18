@@ -34,11 +34,20 @@
         </div>
     </div>
 
-
-    <div class="randomMovie" *ngIf="showDetail">
+    <!-- *ngIf="showDetail" -->
+    <div class="random_movie" >
         <app-random-movie-detail [randomMovie]="randomMovie"></app-random-movie-detail>
         <div class="result_buttons">
-            <button mat-raised-button class="add" (click)="addToPlayList()" *ngIf="isLoggedIn">Add to Playlist...</button>
+            <div class="dropdown">
+                <button mat-raised-button class="add" *ngIf="isLoggedIn" [disabled]="showPlaylists" (click)="showPlaylists = true">Add to Playlist...</button>
+                <div class="dropdown-content">
+                    <ul *ngIf="showPlaylists">
+                        <li *ngFor="let playlist of userPlaylists" >
+                            <button class="add_to" mat-raised-button (click)="addToPlaylist()">{{playlist}}</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
             <button mat-raised-button class="back" (click)="back()">Back</button>
         </div>
     </div>
