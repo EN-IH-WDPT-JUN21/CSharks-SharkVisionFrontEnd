@@ -1,14 +1,13 @@
 import { User } from "./user.model";
 
-export class Playlist{
+export class NewPlaylist{
     constructor(
-        private _playlistId: number, 
         private _user: User,
         private _name: string,
         private _visible: boolean
-    ){}
-
-    
+        ){}
+        
+        
     public get visible(): boolean {
         return this._visible;
     }
@@ -26,11 +25,5 @@ export class Playlist{
     }
     public set user(value: User) {
         this._user = value;
-    }
-    public get playlistId(): number {
-        return this._playlistId;
-    }
-    public set playlistId(value: number) {
-        this._playlistId = value;
     }
 }

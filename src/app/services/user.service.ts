@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
 import { Playlist } from '../models/playlist.model';
+import { NewPlaylist } from '../models/newPlaylist.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   getCurrentUser(): Observable<any> {
-    return this.http.get<any>(this.baseUrl + "/username/current");
+    return this.http.get<any>(this.baseUrl + "/authenticated");
   }
 
   register(username: string, email: string, password: string) {
@@ -54,8 +55,7 @@ export class UserService {
     }
   
     // Create Playlist
-    createPlaylist(id: number, playlist: Playlist): Observable<Object> {
-      return this.http.post(this.baseUrl + id + '/createPlaylist', playlist);
+    createPlaylist(id: number, newPlaylist: NewPlaylist): Observable<Object> {
+      return this.http.post(this.baseUrl + id + '/createPlaylist', newPlaylist);
     }
-
 }

@@ -11,7 +11,7 @@ export class PlaylistService {
 
   constructor(
     private http:HttpClient
-  ) { }
+    ) { }
 
   // Get all Playlists
   getPlaylists() : Observable<any> {
@@ -24,13 +24,17 @@ export class PlaylistService {
   }
 
   // Get a Playlist by User id
-  getPlaylistByUserId(userId: number) : Observable<any> {
-    return this.http.get<Playlist[]>(this.baseUrl + '/user/' + userId);
+  getPlaylistByUserId() : Observable<any> {
+    return this.http.get<Playlist[]>(this.baseUrl + 'user/authenticated');
   }
 
   // Delete a Playlist
-  deletePlaylist(id: number) : Observable<any> {
-    return this.http.delete(this.baseUrl + id + '/delete');
+  deletePlaylist(id: number) : void {
+    this.http.delete<any>(this.baseUrl + id + '/delete/').subscribe(
+      data => {
+        console.log("deleted");
+      }
+      );
   }
 
   // Add a Movie to a Playlist

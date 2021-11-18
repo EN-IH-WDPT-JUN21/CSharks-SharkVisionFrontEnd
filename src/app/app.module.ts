@@ -22,6 +22,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import { UserPlaylistItemComponent } from './user-playlist-item/user-playlist-item.component';
+import { PlaylistDetailsComponent } from './playlist-details/playlist-details.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
     RegisterComponent,
     WelcomePageComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    UserPlaylistItemComponent,
+    PlaylistDetailsComponent
   ],
   imports: [
     BrowserModule,
