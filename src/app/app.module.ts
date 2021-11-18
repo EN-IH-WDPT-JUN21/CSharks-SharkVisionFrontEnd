@@ -24,6 +24,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { RandomMovieDetailComponent } from './random-movie-detail/random-movie-detail.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { UserPlaylistItemComponent } from './user-playlist-item/user-playlist-item.component';
+import { PlaylistDetailsComponent } from './playlist-details/playlist-details.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     HeaderComponent,
     FooterComponent,
     RandomMovieDetailComponent
+    UserPlaylistItemComponent,
+    PlaylistDetailsComponent
   ],
   imports: [
     BrowserModule,

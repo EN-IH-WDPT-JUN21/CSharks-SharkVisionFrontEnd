@@ -1,0 +1,13 @@
+<h1>Movies:</h1>
+
+<div *ngFor="let movie of movieList">
+    <img class="poster" [src]="movie.image">
+    <h3>{{ movie.title }}</h3>
+    <p>{{ movie.description }}</p>
+
+    <!-- Define and link a getDetails() method -->
+    <button (click)="sendBack()">Details</button>
+</div>
+
+
+<button (click)="sendBack()">Back</button>

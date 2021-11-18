@@ -13,6 +13,9 @@
         <a class="menu-item" routerLink="/search" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Search</a>
       </li>
       <li *ngIf="isLoggedIn">
+        <a class="menu-item" routerLink="/playlists" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Playlists</a>
+      </li>
+      <li *ngIf="isLoggedIn">
         <a class="menu-item" routerLink="/user" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">My Profile</a>
       </li>
       <li *ngIf="!isLoggedIn">

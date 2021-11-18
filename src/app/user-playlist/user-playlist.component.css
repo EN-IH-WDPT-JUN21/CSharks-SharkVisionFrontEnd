@@ -1,0 +1,23 @@
+.playlist {
+    display: inline-block;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-right: 30px;
+}
+
+input, h1 {
+    padding-left: 5px;
+}
+
+.delete {
+    background-color: rgb(153, 4, 4);
+    color: rgb(255, 255, 255);
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    max-width: 30px;
+    max-height: 30px;
+    margin-left: -42px;
+    margin-top: 30px;
+}
