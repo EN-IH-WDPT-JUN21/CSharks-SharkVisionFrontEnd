@@ -28,6 +28,11 @@ export class PlaylistService {
     return this.http.get<Playlist[]>(this.baseUrl + 'user/authenticated');
   }
 
+  // Get Movie Ids by a Playlist Id
+  getAllMoviesIdByPlaylistId(id: number) : Observable<any> {
+    return this.http.get<String[]>(this.baseUrl + id + '/movies');
+  }
+
   // Delete a Playlist
   deletePlaylist(id: number) : void {
     this.http.delete<any>(this.baseUrl + id + '/delete/').subscribe(
