@@ -52,7 +52,7 @@ img {
     margin: 5px;
 }
 
-.result h3 {
+.result h2 {
     display: flex;
     justify-content: center;
     text-align: center;
@@ -68,7 +68,36 @@ img {
     text-align: center;
 }
 
-.button {
-    margin:10px;
-    width: 20%;
+.result_buttons {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+button {
+    margin: 10px;
+    height: 50px;
+}
+
+.random_movie {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 5px;
+}
+
+.dropdown-content li {
+    list-style-type: none;
+    color: #7843e6;
+}
+
+.add_to {
+    font-size: small;
+    display: flex;
+    justify-content: center;
+    padding: 2px;
+    margin: 2px;
+    height: fit-content;
 }

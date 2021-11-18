@@ -1,0 +1,17 @@
+<div class="details">
+    <div class="movie_details" [routerLink] = "['',randomMovie]" >
+        <img class="poster" [src]="randomMovie.image">
+        <div class="text">
+            <h2 class="description">
+                Full title: {{randomMovie.fullTitle}} <br />
+                Year: {{randomMovie.year}},  Release Date: {{randomMovie.releaseDate}} <br />
+                Content Rating: {{randomMovie.contentRating}} <br />
+                imDb Rating: {{randomMovie.imDbRating}} <br />
+                Plot: <br />
+                    {{randomMovie.plot}} <br />
+                Awards: {{randomMovie.awards}} <br />
+                Genres: {{randomMovie.genres}} <br />
+            </h2>
+        </div>
+    </div>
+</div>

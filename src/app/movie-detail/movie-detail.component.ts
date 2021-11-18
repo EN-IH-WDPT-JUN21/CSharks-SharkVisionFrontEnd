@@ -11,7 +11,8 @@ import { Movie } from '../models/movie.model';
 })
 export class MovieDetailComponent implements OnInit {
 
-  @Input () movieDetail!: Movie;
+  @Input() movieDetail!: Movie;
+
   foundMovie: MovieDetail;
 
   constructor(
@@ -22,19 +23,11 @@ export class MovieDetailComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    const movieId:string = this.activatedRoute.snapshot.params['movieDetail'];
-
     this.movieService.getMovieById(this.movieDetail.id).subscribe(
       result => {
         this.foundMovie = result;
       }
     )
   }
-
-  back():void {
-    this.router.navigate(['/search']);
-  }
-
-
 
 }
