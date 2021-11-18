@@ -1,3 +1,4 @@
+import { PlaylistService } from './../services/playlist.service';
 import { UserService } from './../services/user.service';
 import { AuthService } from './../services/auth.service';
 import { MovieDetail } from './../models/movieDetail.model';
@@ -5,6 +6,7 @@ import { MovieService } from './../services/movie.service';
 import { Component, OnInit } from '@angular/core';
 import { PopularMovieResponse } from '../models/popularMovie.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { User } from '../models/user.model';
 
 @Component({
   selector: 'app-welcome-page',
@@ -17,16 +19,18 @@ export class WelcomePageComponent implements OnInit {
   randomMovie: MovieDetail;
   showDetail: boolean;
 
-  currentUser: number;
+  currentUserId: number;
   userPlaylists: string[];
   showPlaylists: boolean;
 
-  constructor(private auth: AuthService, private movieService: MovieService, private userService: UserService, private _snackBar: MatSnackBar) {
+  constructor(private auth: AuthService, private movieService: MovieService, 
+    private userService: UserService, private _snackBar: MatSnackBar,
+    private playListService:PlaylistService) {
     this.popularMovies = [];
     this.randomMovie = new MovieDetail('', '', '', '', '', '', '', '', '', '');
     this.showDetail = false;
     this.userPlaylists = [];
-    this.currentUser = 0;
+    this.currentUserId = 0;
     this.showPlaylists = false;
   }
 
@@ -37,10 +41,9 @@ export class WelcomePageComponent implements OnInit {
 
     // this.generatePopMovies();
 
-    this.getCurrentUser();
-    this.getUserPlaylists(this.currentUser);
+    this.getUserPlaylists();
 
-    this.userPlaylists = ['1', '2', '3', '1', '2', '3'];
+    console.log("Testing")
   }
 
   randomMovieGenerator(): void {
@@ -62,12 +65,6 @@ export class WelcomePageComponent implements OnInit {
     this.showPlaylists = false;
   }
 
-  getCurrentUser(): void {
-    this.userService.getCurrentUser().subscribe(result => {
-      this.currentUser = result;
-    })
-  }
-
   generatePopMovies(): void {
     this.movieService.getPopularMovies().subscribe(result => {
       const popMovieResponse: PopularMovieResponse = result;
@@ -85,8 +82,10 @@ export class WelcomePageComponent implements OnInit {
     )
   }
 
-  getUserPlaylists(userId: number): void {
-
+  getUserPlaylists(): void {
+    this.playListService.getPlaylistByUserId().subscribe(result => {
+      this.userPlaylists = result;
+    })
   }
 
   addToPlaylist() {

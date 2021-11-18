@@ -1,5 +1,6 @@
 import { User } from "./user.model";
 
+
 export class NewPlaylist{
     constructor(
         private _user: User,
