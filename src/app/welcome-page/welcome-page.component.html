@@ -8,23 +8,49 @@
     <h1>Welcome to Sharkvision!</h1>
   </header>
 
-    <section class="welcome_main">
+    <div class="welcome_main" *ngIf="!isLoggedIn">
         <h3>
             Sharkvision is your new favourite movie hub.
-
+            <br />
             Search for a film, create a playlist and add your favourites.
-
+            <br />
             New to Sharkvision? Register for an account here:
         </h3>
         <div class="buttons">
             <button mat-raised-button class="register">Register</button>
         </div>
-    </section>
+    </div>
 
+    <div class="welcome_main" *ngIf="isLoggedIn">
+        <h3>
+            Sharkvision is your new favourite movie hub.
+            <br />
+            Search for a film, create a playlist and add your favourites.
+            <br />
+            Not sure what to look for? Try this: 
+        </h3>
+        <div class="buttons">
+            <button mat-raised-button class="register" (click)="randomMovieGenerator()">Random Movie</button>
+        </div>
+    </div>
 
-    <!-- <button (click)="randomMovie()">
-        Recommend a movie.
-    </button> -->
+    <!-- *ngIf="showDetail" -->
+    <div class="random_movie" >
+        <app-random-movie-detail [randomMovie]="randomMovie"></app-random-movie-detail>
+        <div class="result_buttons">
+            <div class="dropdown">
+                <button mat-raised-button class="add" *ngIf="isLoggedIn" [disabled]="showPlaylists" (click)="showPlaylists = true">Add to Playlist...</button>
+                <div class="dropdown-content">
+                    <ul *ngIf="showPlaylists">
+                        <li *ngFor="let playlist of userPlaylists" >
+                            <button class="add_to" mat-raised-button (click)="addToPlaylist()">{{playlist}}</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <button mat-raised-button class="back" (click)="back()">Back</button>
+        </div>
+    </div>
 
     <div class="result">
         <h2>Top 10 Movies</h2>

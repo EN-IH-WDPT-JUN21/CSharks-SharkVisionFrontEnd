@@ -21,7 +21,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { RandomMovieDetailComponent } from './random-movie-detail/random-movie-detail.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { UserPlaylistItemComponent } from './user-playlist-item/user-playlist-item.component';
 import { PlaylistDetailsComponent } from './playlist-details/playlist-details.component';
 
@@ -37,6 +39,7 @@ import { PlaylistDetailsComponent } from './playlist-details/playlist-details.co
     WelcomePageComponent,
     HeaderComponent,
     FooterComponent,
+    RandomMovieDetailComponent
     UserPlaylistItemComponent,
     PlaylistDetailsComponent
   ],
@@ -51,6 +54,7 @@ import { PlaylistDetailsComponent } from './playlist-details/playlist-details.co
     MatNativeDateModule,
     MatButtonModule,
     MatFormFieldModule,
+    MatSnackBarModule,
     FormsModule,
     ReactiveFormsModule
   ],
