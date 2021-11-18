@@ -21,8 +21,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { RandomMovieDetailComponent } from './random-movie-detail/random-movie-detail.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { RandomMovieDetailComponent } from './random-movie-detail/random-movie-d
     MatNativeDateModule,
     MatButtonModule,
     MatFormFieldModule,
+    MatSnackBarModule,
     FormsModule,
     ReactiveFormsModule
   ],

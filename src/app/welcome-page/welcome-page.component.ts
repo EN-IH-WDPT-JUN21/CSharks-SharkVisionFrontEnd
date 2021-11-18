@@ -4,6 +4,7 @@ import { MovieDetail } from './../models/movieDetail.model';
 import { MovieService } from './../services/movie.service';
 import { Component, OnInit } from '@angular/core';
 import { PopularMovieResponse } from '../models/popularMovie.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-welcome-page',
@@ -20,7 +21,7 @@ export class WelcomePageComponent implements OnInit {
   userPlaylists: string[];
   showPlaylists: boolean;
 
-  constructor(private auth: AuthService, private movieService: MovieService, private userService: UserService) {
+  constructor(private auth: AuthService, private movieService: MovieService, private userService: UserService, private _snackBar: MatSnackBar) {
     this.popularMovies = [];
     this.randomMovie = new MovieDetail('', '', '', '', '', '', '', '', '', '');
     this.showDetail = false;
@@ -90,6 +91,11 @@ export class WelcomePageComponent implements OnInit {
 
   addToPlaylist() {
     this.showPlaylists = false;
+    this.openSnackBar("Movie added to playlist","Close");
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
   }
 }
 
