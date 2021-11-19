@@ -1,3 +1,4 @@
+import { Playlist } from './../models/playlist.model';
 import { PlaylistService } from './../services/playlist.service';
 import { UserService } from './../services/user.service';
 import { AuthService } from './../services/auth.service';
@@ -6,7 +7,8 @@ import { MovieService } from './../services/movie.service';
 import { Component, OnInit } from '@angular/core';
 import { PopularMovieResponse } from '../models/popularMovie.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { User } from '../models/user.model';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-welcome-page',
@@ -14,23 +16,24 @@ import { User } from '../models/user.model';
   styleUrls: ['./welcome-page.component.css']
 })
 export class WelcomePageComponent implements OnInit {
+
+  private ngUnsubscribe = new Subject();
+
   isLoggedIn = false;
   popularMovies: MovieDetail[];
   randomMovie: MovieDetail;
   showDetail: boolean;
 
-  currentUserId: number;
-  userPlaylists: string[];
+  userPlaylists: Playlist[];
   showPlaylists: boolean;
 
   constructor(private auth: AuthService, private movieService: MovieService, 
     private userService: UserService, private _snackBar: MatSnackBar,
-    private playListService:PlaylistService) {
+    private playlistService:PlaylistService) {
     this.popularMovies = [];
-    this.randomMovie = new MovieDetail('', '', '', '', '', '', '', '', '', '');
+    this.randomMovie = new MovieDetail('tt1375666', '', '', '', '', 'Dom Cobb is a skilled thief, the absolute best in the dangerous art of extraction, stealing', '', '', '', '');
     this.showDetail = false;
     this.userPlaylists = [];
-    this.currentUserId = 0;
     this.showPlaylists = false;
   }
 
@@ -39,25 +42,21 @@ export class WelcomePageComponent implements OnInit {
 
     this.popularMovies = [];
 
-    // this.generatePopMovies();
+    this.generatePopMovies();
 
     this.getUserPlaylists();
-
-    console.log("Testing")
   }
 
   randomMovieGenerator(): void {
     var index = Math.floor(Math.random() * (99 + 1));
-    this.movieService.getMovieById(this.popularMovies[index].id).subscribe(
+    var movieId = this.popularMovies[index].id;
+
+    this.movieService.getMovieById(movieId).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       result => {
         this.randomMovie = result;
       }
     )
     this.showDetail = true;
-  }
-
-  addToPlayList(): void {
-
   }
 
   back(): void {
@@ -66,7 +65,7 @@ export class WelcomePageComponent implements OnInit {
   }
 
   generatePopMovies(): void {
-    this.movieService.getPopularMovies().subscribe(result => {
+    this.movieService.getPopularMovies().pipe(takeUntil(this.ngUnsubscribe)).subscribe(result => {
       const popMovieResponse: PopularMovieResponse = result;
       var i = 0;
       for (let movie of popMovieResponse.items) {
@@ -83,18 +82,36 @@ export class WelcomePageComponent implements OnInit {
   }
 
   getUserPlaylists(): void {
-    this.playListService.getPlaylistByUserId().subscribe(result => {
-      this.userPlaylists = result;
+    this.playlistService.getPlaylistByUserId().subscribe(
+      result => {
+        this.userPlaylists = result;
     })
   }
 
-  addToPlaylist() {
+  addToPlaylist(id:number) {
     this.showPlaylists = false;
-    this.openSnackBar("Movie added to playlist","Close");
+    console.log(this.randomMovie.id);
+    if (this.userPlaylists[id].movies.length < 10){
+      this.playlistService.addMovie(this.userPlaylists[id].playlistId,this.randomMovie.id).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+        result => {
+          
+        }
+      );
+      this.openSnackBar("Movie added to playlist","Close");
+    }
+    else {
+      this.openSnackBar("Playlist is full","Close");
+    }
+    this.getUserPlaylists();
   }
 
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action);
   }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  } 
 }
 
