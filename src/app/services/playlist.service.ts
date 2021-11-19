@@ -43,7 +43,7 @@ export class PlaylistService {
   }
 
   // Add a Movie to a Playlist
-  addMovie(playlistId:number, titleId: number) : Observable<any> {
+  addMovie(playlistId:number, titleId: string) : Observable<any> {
     return this.http.put(this.baseUrl + playlistId + '/add/' + titleId, {});
   }
 
