@@ -1,7 +1,106 @@
-<img src="{{currentUserDetails.pictureUrl}}" alt="{{currentUserDetails.pictureUrl}}">
-<p>{{currentUserDetails.name}}</p>
-<p>{{currentUserDetails.emailAddress}}</p>
-<p>{{currentUserDetails.username}}</p>
-<p>{{currentUserDetails.bio}}</p>
-<p>{{currentUserDetails.playlists}}</p>
+<!-- <div class="user_profile">
 
+    <div class="picture">
+        <img src="{{currentUserDetails.pictureUrl}}" alt="{{currentUserDetails.pictureUrl}}">
+     
+    <div *ngIf="toChangePicture; then showPic else hidePic"></div>
+    
+        <ng-template #showPic>
+            <input class="change" type="url" [value]="currentUserDetails.pictureUrl" (input)="saveUrl($event)">
+            <button (click)="updatePicture(currentUserDetails.pictureUrl)">Submit</button>
+        </ng-template>
+
+        <ng-template #hidePic>
+            <button (click)="changePicture()">Change Picture</button>
+        </ng-template>
+    </div>
+
+
+    <div class="user_details">
+
+        <header class="header">
+            <h1>{{currentUserDetails.username}} Profile</h1>
+        </header>
+
+        <p>{{currentUserDetails.name}}</p>
+        <p>User Name: {{currentUserDetails.username}}</p>
+        <p> {{currentUserDetails.emailAddress}}</p>
+        <br />
+        <p>{{currentUserDetails.bio}}</p>
+        <p>{{currentUserDetails.playlists}}</p>
+
+        <div *ngIf="toChangeBio; then writeBio else hideBio"></div>
+
+        <ng-template #writeBio>
+            <textarea class="change" type="text" maxlength="220" [value]="currentUserDetails.bio"
+                (input)="saveBio($event)"></textarea>
+            <button (click)="updateBio(currentUserDetails.bio)">Submit</button>
+        </ng-template>
+
+        <ng-template #hideBio>
+            <button (click)="changeBio()">Change Bio</button>
+        </ng-template>
+
+    </div>
+
+
+</div> -->
+
+
+
+<div class="user">
+
+    <div class="picture">
+        <img src="{{currentUserDetails.pictureUrl}}" alt="{{currentUserDetails.pictureUrl}}">
+    </div>
+
+    <div class="details">
+
+        <header class="header">
+            <h1>{{currentUserDetails.username}} Profile</h1>
+        </header>
+
+
+        <p> {{currentUserDetails.emailAddress}}</p>
+        <br />
+        <div class="bio">
+            <p>{{currentUserDetails.bio}}</p>
+        </div>
+        <!-- <p class="bio">{{currentUserDetails.bio}}</p> -->
+
+    </div>
+</div>
+
+<div class="buttons">
+
+    <div>
+        <div *ngIf="toChangePicture; then showPic else hidePic"></div>
+
+        <ng-template #showPic>
+            <input type="url" [value]="currentUserDetails.pictureUrl" (input)="saveUrl($event)" autofocus>
+            <button (click)="updatePicture(currentUserDetails.pictureUrl)">Submit</button>
+        </ng-template>
+
+        <ng-template #hidePic>
+            <button (click)="changePicture()">Change Picture</button>
+        </ng-template>
+    </div>
+
+
+    <div>
+        <div *ngIf="toChangeBio; then writeBio else hideBio"></div>
+
+        <ng-template #writeBio>
+            <textarea type="text" maxlength="220" [value]="currentUserDetails.bio"
+                (input)="saveBio($event)" autofocus></textarea>
+            <button (click)="updateBio(currentUserDetails.bio)">Submit</button>
+        </ng-template>
+
+        <ng-template #hideBio>
+            <button (click)="changeBio()">Change Bio</button>
+        </ng-template>
+
+    </div>
+
+
+</div>

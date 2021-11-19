@@ -11,6 +11,7 @@ import { Component, OnInit } from '@angular/core';
 export class UserProfileComponent implements OnInit {
   isLoggedIn = false;
   currentUserDetails = {
+    id: 0,
     username: "",
     name: "",
     emailAddress: "",
@@ -18,6 +19,8 @@ export class UserProfileComponent implements OnInit {
     bio: "",
     playlists: []
   }
+  toChangePicture: boolean = false;
+  toChangeBio: boolean = false;
 
   constructor(private router: Router, private auth: AuthService, private userService: UserService) { }
 
@@ -42,7 +45,37 @@ export class UserProfileComponent implements OnInit {
         this.currentUserDetails.playlists = data.playlists;
       }
     )
+  }
 
+  changePicture() {
+    this.toChangePicture = true;
+  }
+
+  changeBio() {
+    this.toChangeBio = true;
+  }
+
+  saveUrl(url: any) {
+    this.currentUserDetails.pictureUrl = url.target.value;
+  }
+
+  updatePicture(pictureUrl: string) {
+    console.log(this.currentUserDetails.username);
+    this.userService.setUserUrl(pictureUrl).subscribe(data => {
+      console.log(data);
+    });
+    this.toChangePicture = false;
+  }
+
+  saveBio(bio: any) {
+    this.currentUserDetails.bio = bio.target.value;
+  }
+
+  updateBio(bio: string) {
+    this.userService.setUserBio(bio).subscribe(data => {
+      console.log(data);
+    });
+    this.toChangeBio = false;
   }
 
 }
