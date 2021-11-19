@@ -1,9 +1,11 @@
 import { MovieService } from './../services/movie.service';
 import { PlaylistService } from './../services/playlist.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Movie } from '../models/movie.model';
 import { Playlist } from '../models/playlist.model';
+import { templateVisitAll } from '@angular/compiler';
+import { MovieDetail } from '../models/movieDetail.model';
 
 @Component({
   selector: 'app-playlist-details',
@@ -12,28 +14,39 @@ import { Playlist } from '../models/playlist.model';
 })
 export class PlaylistDetailsComponent implements OnInit {
   playlistId: number = this.activatedRoute.snapshot.params['playlistId'];
-  playlist!: Playlist;
   movie!: Movie;
-  // movie: Movie = new Movie("id", "resultType", "image", "title", "description");
-  movieList: Movie[] = [];
-
-
+  movieList!: Movie[];
+  movieIdList!: string[];
+  movieDetailsList!: MovieDetail[];
+  
+  @Input() 
+  playlist!: Playlist;
+  
   constructor(private playlistService: PlaylistService, private movieService: MovieService, private router: Router, private activatedRoute:ActivatedRoute,) {   
-  }
+  };
   
   ngOnInit(): void {
-
-    this.playlistService.getPlaylist(this.playlistId).subscribe( result => {
-      this.playlist = result;
-      // this.movieList = this.playlist.movies;
+    this.getMoviesId(); 
+    this.getMovieDetails()
+  }
+  
+  getMoviesId():void {
+    this.playlistService.getAllMoviesIdByPlaylistId(this.playlistId).subscribe(result => {
+      this.movieIdList = result;
     });
-
-    this.movieService.getMovieById(this.movie.id).subscribe(
-      result => {
-        this.movie = result;
-      }
-    )
-}
+  };
+  
+  getMovieDetails(): void {
+    let movieDetail = new MovieDetail('','','','','','','','','','');
+    for(let i = 0; i < this.movieIdList.length; i++) {
+      this.movieService.getMovieById(this.movieIdList[i]).subscribe(result => {
+      movieDetail.image = result.image;
+      movieDetail.fullTitle = result.fullTitle;
+      movieDetail.plot = result.plot;
+      this.movieDetailsList.push(movieDetail);
+      });
+    }
+  }
 
   sendBack(): void {
     this.router.navigate(['/playlists']);

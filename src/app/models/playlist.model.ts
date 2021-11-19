@@ -1,3 +1,4 @@
+import { Movie } from "./movie.model";
 import { User } from "./user.model";
 
 
@@ -6,10 +7,17 @@ export class Playlist{
         private _playlistId: number, 
         private _user: User,
         private _name: string,
-        private _visible: boolean
-    ){}
-
-    
+        private _visible: boolean,
+        private _movies: Movie[]
+        ){}
+        
+        
+    public get movies(): Movie[] {
+        return this._movies;
+    }
+    public set movies(value: Movie[]) {
+        this._movies = value;
+    }
     public get visible(): boolean {
         return this._visible;
     }

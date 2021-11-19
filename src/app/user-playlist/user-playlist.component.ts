@@ -26,7 +26,6 @@ export class UserPlaylistComponent implements OnInit {
   constructor(private playlistService: PlaylistService, private auth: AuthService, private userService: UserService, private router: Router) {
     this.playlistList = [];
     this.newPlaylistName = "";
-    // this.user = new User(this.userService.getCurrentUser());
    }
 
   ngOnInit(): void {
@@ -67,11 +66,12 @@ export class UserPlaylistComponent implements OnInit {
       this.visible = !this.visible;
       console.log(this.visible);
     }
-
-    // GET A USER!!!!!!!!
+    
     addPlaylist(): void{
-      // this.user = this.userService.getCurrentUser();
-      this.newPlaylist = new NewPlaylist(this.user, this.newPlaylistName, this.visible);
-      this.userService.createPlaylist(2, this.newPlaylist);
+      let newPlaylist: NewPlaylist = new NewPlaylist(this.newPlaylistName, this.visible);
+      console.log(newPlaylist);
+      this.userService.createPlaylist(newPlaylist).subscribe(result => {
+        console.log(result);
+      });
     }
 }

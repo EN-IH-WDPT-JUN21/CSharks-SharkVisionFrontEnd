@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
 import { Playlist } from '../models/playlist.model';
@@ -54,7 +54,14 @@ export class UserService {
     }
   
     // Create Playlist
-    createPlaylist(id: number, newPlaylist: NewPlaylist): Observable<Object> {
-      return this.http.post(this.baseUrl + id + '/createPlaylist', newPlaylist);
-    }
+    createPlaylist(newPlaylist: NewPlaylist): Observable<Object> {   
+      const body = {
+        name: newPlaylist.name,
+        visible: newPlaylist.visible
+      }
+
+      const headers = new HttpHeaders({ 'Content-Type': 'application/json' });  
+
+      return this.http.post(this.baseUrl + '/authenticated/createPlaylist', body,{'headers':headers})
+    }    
 }
