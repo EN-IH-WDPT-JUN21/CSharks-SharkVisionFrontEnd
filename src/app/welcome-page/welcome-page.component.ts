@@ -38,9 +38,9 @@ export class WelcomePageComponent implements OnInit {
   newPlaylist: FormControl;
   visible: FormControl;
 
-  constructor(private auth: AuthService, private movieService: MovieService, 
+  constructor(private auth: AuthService, private movieService: MovieService,
     private userService: UserService, private _snackBar: MatSnackBar,
-    private playlistService:PlaylistService) {
+    private playlistService: PlaylistService) {
     this.popularMovies = [];
     this.randomMovie = new MovieDetail('tt1375666', '', '', '', '', 'Dom Cobb is a skilled thief, the absolute best in the dangerous art of extraction, stealing', '', '', '', '');
     this.showDetail = false;
@@ -49,11 +49,11 @@ export class WelcomePageComponent implements OnInit {
     this.playlistVisible = false;
     this.createNewPlaylist = false;
 
-    this.newPlaylist = new FormControl('',[Validators.required]);
+    this.newPlaylist = new FormControl('', [Validators.required]);
     this.visible = new FormControl(false);
     this.newPlaylistForm = new FormGroup({
-      newPlaylist:this.newPlaylist,
-      visible:this.visible
+      newPlaylist: this.newPlaylist,
+      visible: this.visible
     })
   }
 
@@ -105,13 +105,13 @@ export class WelcomePageComponent implements OnInit {
     this.playlistService.getPlaylistByUserId().subscribe(
       result => {
         this.userPlaylists = result;
-    })
+      })
   }
 
-  addToPlaylist(id:number) {
+  addToPlaylist(id: number) {
     this.showPlaylists = false;
-    if (this.userPlaylists[id].movies.length >= 10){
-      this.openSnackBar("Playlist is full","Close");
+    if (this.userPlaylists[id].movies.length >= 10) {
+      this.openSnackBar("Playlist is full", "Close");
     }
     else {
       this.addMovie(id);
@@ -119,14 +119,14 @@ export class WelcomePageComponent implements OnInit {
     this.getUserPlaylists();
   }
 
-  addMovie(id:number) {
+  addMovie(id: number) {
     this.showPlaylists = false;
-    this.playlistService.addMovie(this.userPlaylists[id].playlistId,this.randomMovie.id).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
-        result => {
-          
-        }
-      );
-      this.openSnackBar("Movie added to playlist","Close");
+    this.playlistService.addMovie(this.userPlaylists[id].playlistId, this.randomMovie.id).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+      result => {
+
+      }
+    );
+    this.openSnackBar("Movie added to playlist", "Close");
     this.getUserPlaylists();
   }
 
@@ -134,20 +134,21 @@ export class WelcomePageComponent implements OnInit {
     this._snackBar.open(message, action);
   }
 
-  createPlaylist(): void{
+  createPlaylist(): void {
     let newPlaylist: PlayListWithMovie = new PlayListWithMovie(this.newPlaylistForm.value.newPlaylist, this.newPlaylistForm.value.visible, this.randomMovie.id);
     console.log(newPlaylist);
     this.userService.createPlaylistWithMovie(newPlaylist).pipe(takeUntil(this.ngUnsubscribe)).subscribe(result => {
       console.log(result);
     });
-    this.openSnackBar("Playlist created","Close");
+    this.openSnackBar("Playlist created", "Close");
     this.createNewPlaylist = false;
     this.getUserPlaylists();
+    this.newPlaylistForm.reset();
   }
 
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
-  } 
+  }
 }
 
