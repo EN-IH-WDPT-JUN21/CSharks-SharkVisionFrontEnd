@@ -1,4 +1,41 @@
-# SharkVision
+# Cshark - SharkVision [FrontEnd]
+
+## Table of Contents
+
+1. [**About The Project**](#About-The-Project)
+   - [**Requirements**](#Requirements)
+   - [**Built With**](#Built-With)
+2. [**Getting Started**](#Getting-Started)
+   - [**Prerequisites**](#Prerequisites)
+   - [**Installation**](#Installation)
+3. [**Usage**](#Usage)
+   - [**SignIn**](#SignIn)
+   - [**Installation**](#Installation)
+4. [**Contacts**](#Contacts)
+
+## About The Project
+
+### Requirements
+
+### Built With
+
+## Getting Started
+
+### Prerequisites
+
+### Installation
+
+## Usage
+
+### Searching Movies
+
+### SignIn
+
+### Profile
+
+### Playlists
+
+## Contacts
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.10.
 
