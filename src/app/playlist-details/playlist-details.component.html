@@ -1,12 +1,14 @@
-<button class="back-button" (click)="sendBack()">Back</button>
-<br/>
-<h1>Movies:</h1>
+<div class="container">
+    <button mat-raised-button class="back-button" (click)="sendBack()">Back</button>
+    <br/>
+    <h1>Movies:</h1>
 
-<div class="movie-detail"  *ngFor="let movie of movieDetailsList">
-    <button class="delete" (click)="removeMovie(movie.id)">X</button>
-    <div class="movie-detail-container">
-        <h3><b>{{ movie.fullTitle }}</b></h3>
-        <img class="poster" [src]="movie.image">
-        <p>{{ movie.plot }}</p>
+    <div class="movie-detail"  *ngFor="let movie of movieDetailsList">
+        <button class="delete" (click)="removeMovie(movie.id)">Remove</button>
+        <div class="movie-detail-container">
+            <h3><b>{{ movie.fullTitle }}</b></h3>
+            <img class="poster" [src]="movie.image">
+            <p>{{ movie.plot }}</p>
+        </div>
     </div>
-</div>
+</div>    

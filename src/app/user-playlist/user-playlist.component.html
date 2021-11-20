@@ -1,13 +1,15 @@
+<div class="container">
 <h1>Your playlists</h1>
 
 <input type="text" [(ngModel)]="playlist" placeholder="New playlist name.." [(ngModel)]="newPlaylistName">
 <br/>
 <input type="checkbox" [(ngModel)]="visible" (click)="changeVisible()">Private playlist
 <br/>
-<button (click)="[addPlaylist(), updatePlaylistList()]">Add</button>
+<button mat-raised-button (click)="[addPlaylist(), updatePlaylistList()]">Add</button>
 <br/>
 
 <div class="playlist" *ngFor="let playlist of playlistList">
     <app-user-playlist-item [playlist]="playlist"></app-user-playlist-item>
-    <button class="delete" (click)="[removePlaylist(playlist), updatePlaylistList()]">X</button>
+    <button class="delete" (click)="[removePlaylist(playlist), updatePlaylistList()]">Remove</button>
+</div>
 </div>
