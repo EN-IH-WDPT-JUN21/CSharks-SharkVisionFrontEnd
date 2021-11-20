@@ -109,8 +109,7 @@ export class WelcomePageComponent implements OnInit {
 
   addToPlaylist(id:number) {
     this.showPlaylists = false;
-    console.log(this.randomMovie.id);
-    if (this.userPlaylists[id].movies.length < 10){
+    if (this.userPlaylists[id].movies.length < 10 || this.userPlaylists[id].movies.length == 0){
       this.playlistService.addMovie(this.userPlaylists[id].playlistId,this.randomMovie.id).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
         result => {
           
@@ -134,6 +133,9 @@ export class WelcomePageComponent implements OnInit {
     this.userService.createPlaylist(newPlaylist).pipe(takeUntil(this.ngUnsubscribe)).subscribe(result => {
       console.log(result);
     });
+    this.getUserPlaylists();
+
+    this.addToPlaylist(this.userPlaylists[this.userPlaylists.length - 1].playlistId);
   }
 
   ngOnDestroy() {

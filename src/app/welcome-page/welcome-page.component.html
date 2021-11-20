@@ -52,7 +52,7 @@
                                 <p class="error_msg" *ngIf="newPlaylist.invalid && newPlaylist.touched">
                                     Playlist name cannot be empty
                                 </p>
-                                <label for="public">Public? <input type="checkbox" formControlName="visible" name="public" formControlName="visible"></label>
+                                <label for="public">Public? <input type="checkbox" formControlName="visible" formControlName="visible"></label>
                                 <button mat-raised-button class="add_to_submit" type="submit" [disabled]="newPlaylistForm.invalid">Create
                                     Playlist</button>
                             </form>
