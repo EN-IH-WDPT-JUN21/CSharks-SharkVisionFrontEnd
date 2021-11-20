@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from './../services/auth.service';
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
@@ -10,13 +11,11 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   isRegister = false;
-  isLoginError = false;
-  isLoggedIn = false;
   loginForm: FormGroup;
   username: FormControl;
   password: FormControl;
 
-  constructor(private auth: AuthService, private router: Router) {
+  constructor(private auth: AuthService, private router: Router, private snackBar: MatSnackBar) {
     this.username = new FormControl('', [Validators.required]);
     this.password = new FormControl('', [Validators.required]);
     this.loginForm = new FormGroup({
@@ -26,27 +25,26 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.auth.loggedIn.subscribe(loggedIn => this.isLoggedIn = loggedIn);
-    if (this.isLoggedIn) {
-      this.router.navigate(['/home']);
-      return;
-    }
+    this.auth.loggedIn.subscribe(
+      loggedIn => {
+        if (loggedIn === true) this.router.navigate(['/home']);
+      }
+    );
   }
 
   performLogin(): void {
     const formData = this.loginForm.value;
-    console.log("logging with: " + formData.username + " " + formData.password);
-
     if (formData.username && formData.password) {
-      this.auth.login(formData.username, formData.password)
-        .subscribe(() => {
-          console.log("Login success!");
+      this.auth.login(formData.username, formData.password).subscribe(
+        result => {
+          this.openSnackBar("Login successful", "Close");
           this.router.navigate(['/user']);
-          return;
-        });
-
-      this.loginForm.setValue({ username: formData.username, password: '' });
-      this.isLoginError = true;
+        },
+        error => {
+          this.loginForm.setValue({ username: formData.username, password: '' });
+          this.openSnackBar("Login failed. Try again", "Close");
+        }
+      );
     }
   }
 
@@ -55,13 +53,17 @@ export class LoginComponent implements OnInit {
     this.loginForm.reset();
   }
 
-  goToLogin(isRegister: boolean): void {
-    this.isRegister = isRegister;
-    this.loginForm.reset();
+  goToLogin(): void {
+    this.isRegister = false;
+    this.loginForm.setValue({ username: this.username.value, password: '' });
   }
 
   setUsername(username: string): void {
     this.username.setValue(username);
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, { duration: 5000 });
   }
 
 }

@@ -26,58 +26,53 @@ export class UserPlaylistComponent implements OnInit {
   newPlaylistName: string;
   visible: boolean = false;
   user!: User;
-  
+
   constructor(private playlistService: PlaylistService, private auth: AuthService, private userService: UserService, private router: Router) {
     this.playlistList = [];
     this.newPlaylistName = "";
-   }
+  }
 
   ngOnInit(): void {
-    
     this.auth.loggedIn.subscribe(loggedIn => this.isLoggedIn = loggedIn);
     if (!this.isLoggedIn) {
       this.router.navigate(['/login']);
       return;
     }
-    
-    this.playlistService.getPlaylistByUserId().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
-      result => {
-        this.playlistList = result;
-      });
+    this.updatePlaylistList();
   }
 
-  removePlaylist(playlist:Playlist):void{
+  updatePlaylistList(): void {
+    this.playlistService.getPlaylistByUserId()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        result => this.playlistList = result
+      );
+  }
+
+
+  changeVisible(): void {
+    this.visible = !this.visible;
+  }
+
+  addPlaylist(): void {
+    let newPlaylist: NewPlaylist = new NewPlaylist(this.newPlaylistName, this.visible);
+    this.userService.createPlaylist(newPlaylist)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(result => this.updatePlaylistList());
+  }
+
+  removePlaylist(playlist: Playlist): void {
     this.playlistService.deletePlaylist(playlist.playlistId);
     this.playlistService.getPlaylistByUserId().subscribe(
       result => {
         this.playlistList = result;
+        this.updatePlaylistList();
       });
-    }
-    
-    updatePlaylistList(): void{
-    this.playlistService.getPlaylistByUserId().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
-      result => {
-        this.playlistList = result;
-      });
-    }
-
-    changeVisible(): void{
-      this.visible = !this.visible;
-    }
-    
-    addPlaylist(): void{
-      let newPlaylist: NewPlaylist = new NewPlaylist(this.newPlaylistName, this.visible);
-
-
-      console.log(newPlaylist);
-      this.userService.createPlaylist(newPlaylist).pipe(takeUntil(this.ngUnsubscribe)).subscribe(result => {
-        console.log(result);
-
-      });
-    }
-    
-    ngOnDestroy() {
-      this.ngUnsubscribe.next();
-      this.ngUnsubscribe.complete();
-    } 
   }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+
+}

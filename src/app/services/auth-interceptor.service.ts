@@ -6,8 +6,6 @@ import { Injectable } from '@angular/core';
 export class AuthInterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log(localStorage.getItem("access_token"));
-    console.log(localStorage.getItem("access_token"));
     const accessToken = localStorage.getItem("access_token");
 
     if (accessToken) {
@@ -15,7 +13,6 @@ export class AuthInterceptorService implements HttpInterceptor {
         headers: req.headers.set("Authorization",
           "Bearer " + accessToken)
       });
-
       return next.handle(cloned);
     }
     else {

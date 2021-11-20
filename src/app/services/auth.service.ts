@@ -16,7 +16,6 @@ export class AuthService {
 
   login(username: string, password: string) {
     const authBody = `username=${username}&password=${password}`;
-    console.log(authBody);
     const options = {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
     };

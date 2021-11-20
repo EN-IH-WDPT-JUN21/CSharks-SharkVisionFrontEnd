@@ -17,16 +17,16 @@ export class PlaylistDetailsComponent implements OnInit {
 
   @Input()
   playlist!: Playlist;
-  
+
   constructor(
     private playlistService: PlaylistService,
     private movieService: MovieService,
     private router: Router,
     private activatedRoute: ActivatedRoute
-    ) {
-      this.foundMovie = new MovieDetail('','','','','','','','','','');
-      this.movieDetailsList = [];
-    }
+  ) {
+    this.foundMovie = new MovieDetail('', '', '', '', '', '', '', '', '', '');
+    this.movieDetailsList = [];
+  }
 
   ngOnInit(): void {
     this.getMovies();
@@ -34,23 +34,25 @@ export class PlaylistDetailsComponent implements OnInit {
 
   getMovies(): void {
     this.playlistService.getAllMoviesIdByPlaylistId(this.playlistId).subscribe((result: string[]) => {
-        for (let i = 0; i < result.length; i++) {
+      for (let i = 0; i < result.length; i++) {
         this.movieService.getMovieById(result[i]).subscribe(result => {
-        this.foundMovie = result;
-        this.movieDetailsList.push(this.foundMovie);
+          this.foundMovie = result;
+          this.movieDetailsList.push(this.foundMovie);
         });
-        }
-      });
+      }
+    });
   }
 
   sendBack(): void {
     this.router.navigate(['/playlists']);
   }
 
-  removeMovie(movieId: string): void{
+  removeMovie(movieId: string): void {
     this.playlistService.removeMovie(this.playlistId, movieId).subscribe(
-      () => 
-      location.reload()
+      () => {
+        this.movieDetailsList = [];
+        this.getMovies();
+      }
     );
   }
 }

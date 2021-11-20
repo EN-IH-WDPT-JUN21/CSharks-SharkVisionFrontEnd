@@ -11,13 +11,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class RegisterComponent implements OnInit {
   @Output()
-  backToLogin = new EventEmitter<boolean>();
+  backToLogin = new EventEmitter<any>();
 
   @Output()
   setUsernameForLogin = new EventEmitter<string>();
-
-  isValidUsername = true;
-  isValidEmail = true;
 
   registerForm: FormGroup;
   username: FormControl;
@@ -25,7 +22,7 @@ export class RegisterComponent implements OnInit {
   password: FormControl;
   passwordConfirmation: FormControl;
 
-  constructor(private userService: UserService, private _snackBar: MatSnackBar) {
+  constructor(private userService: UserService, private snackBar: MatSnackBar) {
     this.username = new FormControl('', [Validators.required, Validators.minLength(3)]);
     this.email = new FormControl('', [Validators.required, Validators.email]);
     this.password = new FormControl('', [Validators.required, Validators.minLength(6)]);
@@ -43,55 +40,60 @@ export class RegisterComponent implements OnInit {
 
   register(): void {
     if (!this.registerForm.valid) return;
-
     this.checkUsernameExists()
-    console.log("Valid username2? " + this.isValidUsername);
-    if (!this.isValidUsername) {
-      console.log('Username already exists: ' + this.username.value);
-      return;
-    }
-
-    this.checkEmailExists()
-    if (!this.isValidEmail) {
-      console.log('Email already exists: ' + this.email.value);
-      return;
-    }
-
-    this.userService.register(this.username.value, this.email.value, this.password.value).subscribe(
-      (response) => {
-        console.log(response);
-        this.setUsernameForLogin.emit(response.username);
-        this.backToLogin.emit(false);
-      });
-    // this.isValidUsername = true;
-    // this.isValidEmail = true;
   }
 
   back(): void {
-    this.backToLogin.emit(false);
+    this.backToLogin.emit();
   }
 
-  checkUsernameExists(){
+
+  checkUsernameExists() {
     this.userService.checkUsernameExists(this.username.value).subscribe(
       (result: boolean) => {
-        this.isValidUsername = !result
-        console.log("Valid username? " + this.isValidUsername);
-        console.log("Exists? " + result);
+        console.log(result);
+        if (!result) {
+          this.checkEmailExists();
+        } else {
+          this.openSnackBar('Username already exists: ' + this.username.value, 'Close')
+        }
+      },
+      (error) => {
+        this.openSnackBar('Error checking username', 'Close')
       }
     );
   }
 
-
-  checkEmailExists(){
+  checkEmailExists() {
     this.userService.checkEmailExists(this.email.value).subscribe(
       (result: boolean) => {
-        this.isValidEmail = !result
+        if (!result) {
+          console.log(result);
+          this.registerNewUser();
+        } else {
+          this.openSnackBar('Email already exists: ' + this.email.value, 'Close')
+        }
+      },
+      (error) => {
+        this.openSnackBar('Error checking email', 'Close')
+      }
+    );
+  }
+
+  registerNewUser(): void {
+    this.userService.register(this.username.value, this.email.value, this.password.value).subscribe(
+      (response) => {
+        this.setUsernameForLogin.emit(response.username);
+        this.backToLogin.emit();
+      },
+      (error) => {
+        this.openSnackBar('Error registering user', 'Close');
       }
     );
   }
 
   openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action);
+    this.snackBar.open(message, action, { duration: 5000 });
   }
 
 }
