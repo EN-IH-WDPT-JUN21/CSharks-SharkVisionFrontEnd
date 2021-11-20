@@ -2,6 +2,7 @@ import { AuthService } from './../services/auth.service';
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -16,13 +17,17 @@ export class LoginComponent implements OnInit {
   username: FormControl;
   password: FormControl;
 
-  constructor(private auth: AuthService, private router: Router) {
+  constructor(private auth: AuthService, private router: Router, private snackBar: MatSnackBar) {
     this.username = new FormControl('', [Validators.required]);
     this.password = new FormControl('', [Validators.required]);
     this.loginForm = new FormGroup({
       username: this.username,
       password: this.password
     });
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action);
   }
 
   ngOnInit(): void {
@@ -38,15 +43,19 @@ export class LoginComponent implements OnInit {
     console.log("logging with: " + formData.username + " " + formData.password);
 
     if (formData.username && formData.password) {
+      // let isLoginSuccess = false;
+      this.isLoginError = true;
       this.auth.login(formData.username, formData.password)
         .subscribe(() => {
           console.log("Login success!");
           this.router.navigate(['/user']);
-          return;
+          this.isLoginError = false;
         });
 
-      this.loginForm.setValue({ username: formData.username, password: '' });
-      this.isLoginError = true;
+      if (this.isLoginError) {
+        this.loginForm.setValue({ username: formData.username, password: '' });
+        this.openSnackBar("Login failed", "Try again");
+      }
     }
   }
 
