@@ -1,3 +1,4 @@
+import { PlayListWithMovie } from './../models/playlist-with-movie.model';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -70,5 +71,16 @@ export class UserService {
       return this.http.post(this.baseUrl + '/authenticated/createPlaylist', body,{'headers':headers})
     }    
 
-    
+    // Create Playlist with MovieId
+    createPlaylistWithMovie(newPlaylist: PlayListWithMovie): Observable<Object> {   
+      const body = {
+        name: newPlaylist.name,
+        visible: newPlaylist.visible,
+        movieId: newPlaylist.movieId
+      }
+
+      const headers = new HttpHeaders({ 'Content-Type': 'application/json' });  
+
+      return this.http.post(this.baseUrl + '/authenticated/createPlaylistWithMovie', body,{'headers':headers})
+    }   
 }

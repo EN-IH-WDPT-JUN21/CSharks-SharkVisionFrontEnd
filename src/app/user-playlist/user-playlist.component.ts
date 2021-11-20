@@ -43,18 +43,14 @@ export class UserPlaylistComponent implements OnInit {
     this.playlistService.getPlaylistByUserId().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       result => {
         this.playlistList = result;
-        console.log(result);
       });
   }
 
   removePlaylist(playlist:Playlist):void{
     this.playlistService.deletePlaylist(playlist.playlistId);
-    console.log("Playlist removed", playlist.playlistId);
-
-    this.playlistService.getPlaylistByUserId().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+    this.playlistService.getPlaylistByUserId().subscribe(
       result => {
         this.playlistList = result;
-        console.log(result);
       });
     }
     
@@ -62,25 +58,26 @@ export class UserPlaylistComponent implements OnInit {
     this.playlistService.getPlaylistByUserId().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       result => {
         this.playlistList = result;
-        console.log(result);
       });
     }
 
     changeVisible(): void{
       this.visible = !this.visible;
-      console.log(this.visible);
     }
     
     addPlaylist(): void{
       let newPlaylist: NewPlaylist = new NewPlaylist(this.newPlaylistName, this.visible);
+
+
       console.log(newPlaylist);
       this.userService.createPlaylist(newPlaylist).pipe(takeUntil(this.ngUnsubscribe)).subscribe(result => {
         console.log(result);
+
       });
     }
-
+    
     ngOnDestroy() {
       this.ngUnsubscribe.next();
       this.ngUnsubscribe.complete();
     } 
-}
+  }

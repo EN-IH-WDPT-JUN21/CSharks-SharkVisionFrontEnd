@@ -1,3 +1,4 @@
+import { PlayListWithMovie } from './../models/playlist-with-movie.model';
 import { NewPlaylist } from './../models/newPlaylist.model';
 import { Playlist } from './../models/playlist.model';
 import { PlaylistService } from './../services/playlist.service';
@@ -134,9 +135,9 @@ export class WelcomePageComponent implements OnInit {
   }
 
   createPlaylist(): void{
-    let newPlaylist: NewPlaylist = new NewPlaylist(this.newPlaylistForm.value.newPlaylist, this.playlistVisible);
+    let newPlaylist: PlayListWithMovie = new PlayListWithMovie(this.newPlaylistForm.value.newPlaylist, this.newPlaylistForm.value.visible, this.randomMovie.id);
     console.log(newPlaylist);
-    this.userService.createPlaylist(newPlaylist).pipe(takeUntil(this.ngUnsubscribe)).subscribe(result => {
+    this.userService.createPlaylistWithMovie(newPlaylist).pipe(takeUntil(this.ngUnsubscribe)).subscribe(result => {
       console.log(result);
     });
     this.openSnackBar("Playlist created","Close");
