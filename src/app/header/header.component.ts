@@ -14,7 +14,10 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.auth.loggedIn
       .subscribe(
-        loggedIn => this.isLoggedIn = loggedIn
+        loggedIn => {
+          this.isLoggedIn = loggedIn;
+          console.log('header update');
+        }
       );
   }
 

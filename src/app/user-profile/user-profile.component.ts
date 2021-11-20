@@ -26,12 +26,14 @@ export class UserProfileComponent implements OnInit {
   constructor(private router: Router, private auth: AuthService, private userService: UserService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.auth.loggedIn.subscribe(loggedIn => this.isLoggedIn = loggedIn);
+
+    this.isLoggedIn = this.checkLoggedIn();
+    console.log('user update ' + this.isLoggedIn);
     if (!this.isLoggedIn) {
       this.router.navigate(['/login']);
-      return;
+    } else {
+      this.getUser();
     }
-    this.getUser();
   }
 
   getUser() {
@@ -85,6 +87,10 @@ export class UserProfileComponent implements OnInit {
 
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, { duration: 4000 });
+  }
+
+  checkLoggedIn():boolean {
+    return this.auth.isLoggedIn();
   }
 
 }

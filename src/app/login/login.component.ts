@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   isRegister = false;
+  isLoggedIn = false;
   loginForm: FormGroup;
   username: FormControl;
   password: FormControl;
@@ -26,10 +27,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.auth.loggedIn.subscribe(
-      loggedIn => {
-        if (loggedIn === true) this.router.navigate(['/home']);
-      }
+      loggedIn => this.isLoggedIn = loggedIn
     );
+    if (this.auth.isLoggedIn()) {
+      this.router.navigate(['/user']);
+    }
   }
 
   performLogin(): void {

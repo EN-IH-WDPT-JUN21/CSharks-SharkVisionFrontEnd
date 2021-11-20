@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MovieService } from './../services/movie.service';
 import { PlaylistService } from './../services/playlist.service';
@@ -24,13 +25,15 @@ export class PlaylistDetailsComponent implements OnInit {
     private movieService: MovieService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private auth: AuthService
   ) {
     this.foundMovie = new MovieDetail('', '', '', '', '', '', '', '', '', '');
     this.movieDetailsList = [];
   }
 
   ngOnInit(): void {
+    this.checkLoggedIn();
     this.getMovies();
   }
 
@@ -61,6 +64,10 @@ export class PlaylistDetailsComponent implements OnInit {
 
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, { duration: 4000 });
+  }
+
+  checkLoggedIn():boolean {
+    return this.auth.isLoggedIn();
   }
 
 }
