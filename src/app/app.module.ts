@@ -41,7 +41,7 @@ import { PlaylistDetailsComponent } from './playlist-details/playlist-details.co
     FooterComponent,
     RandomMovieDetailComponent,
     UserPlaylistItemComponent,
-    PlaylistDetailsComponent
+    PlaylistDetailsComponent,
   ],
   imports: [
     BrowserModule,
