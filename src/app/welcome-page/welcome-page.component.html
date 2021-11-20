@@ -44,7 +44,7 @@
                     (click)="showPlaylists = true">Add to Playlist...</button>
                 <div class="dropdown-content">
                     <ul *ngIf="showPlaylists">
-                        <li>
+                        <li class="playlistForm">
                             <button class="add_to" mat-raised-button (click)="createNewPlaylist = true">Create New Playlist</button>
                             <form class="newPlaylist" (ngSubmit)="createPlaylist()" [formGroup]="newPlaylistForm" *ngIf="createNewPlaylist">
                                 <input class="createPlaylist" type="text" placeholder="Playlist name"
@@ -52,8 +52,8 @@
                                 <p class="error_msg" *ngIf="newPlaylist.invalid && newPlaylist.touched">
                                     Playlist name cannot be empty
                                 </p>
-                                <label for="public">Public? <input type="checkbox" formControlName="visible" formControlName="visible"></label>
-                                <button mat-raised-button class="add_to_submit" type="submit" [disabled]="newPlaylistForm.invalid">Create
+                                <label for="public">Public? <input type="checkbox" formControlName="visible" formControlName="visible" ng-change="visible = true"></label>
+                                <button mat-raised-button color="primary" class="add_to_submit" type="submit" [disabled]="newPlaylistForm.invalid">Create
                                     Playlist</button>
                             </form>
                         </li>
