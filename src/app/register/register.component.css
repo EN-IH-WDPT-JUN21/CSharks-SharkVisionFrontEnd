@@ -25,7 +25,7 @@ img {
     align-items: center;
 }
 
-.username, .password, .email, .passwordConfirmation {
+.username, .password, .email, .passwordConfirmation, .error_msg {
     padding: 10px;
     margin: 10px;
 }

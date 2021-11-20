@@ -2,6 +2,7 @@ import { CustomValidator } from './../validators/custom-validators';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from './../services/user.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -24,7 +25,7 @@ export class RegisterComponent implements OnInit {
   password: FormControl;
   passwordConfirmation: FormControl;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private _snackBar: MatSnackBar) {
     this.username = new FormControl('', [Validators.required, Validators.minLength(3)]);
     this.email = new FormControl('', [Validators.required, Validators.email]);
     this.password = new FormControl('', [Validators.required, Validators.minLength(6)]);
@@ -87,6 +88,10 @@ export class RegisterComponent implements OnInit {
         this.isValidEmail = !result
       }
     );
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
   }
 
 }
