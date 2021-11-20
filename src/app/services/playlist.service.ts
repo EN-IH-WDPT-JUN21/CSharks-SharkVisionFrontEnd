@@ -29,8 +29,8 @@ export class PlaylistService {
   }
 
   // Get Movie Ids by a Playlist Id
-  getAllMoviesIdByPlaylistId(id: number) : Observable<any> {
-    return this.http.get<String[]>(this.baseUrl + id + '/movies');
+  getAllMoviesIdByPlaylistId(id: number) : Observable<string[]> {
+    return this.http.get<string[]>(this.baseUrl + id + '/movies');
   }
 
   // Delete a Playlist
@@ -48,7 +48,7 @@ export class PlaylistService {
   }
 
   // Delete a Movie from a Playlist 
-  removeMovie(playlistId:number, titleId: number) : Observable<any> {
+  removeMovie(playlistId:number, titleId: string) : Observable<Object> {
     return this.http.put(this.baseUrl + playlistId + '/remove/' + titleId, {});
   }
 }

@@ -1,12 +1,12 @@
+<button class="back-button" (click)="sendBack()">Back</button>
+<br/>
 <h1>Movies:</h1>
 
-<div *ngFor="let movie of movieDetailsList">
-    <img class="poster" [src]="movie.image">
-    <h3>{{ movie.fullTitle }}</h3>
-    <p>{{ movie.plot }}</p>
-
-    <!-- Define and link a getDetails() method -->
-    <button (click)="sendBack()">Details</button>
+<div class="movie-detail"  *ngFor="let movie of movieDetailsList">
+    <button class="delete" (click)="removeMovie(movie.id)">X</button>
+    <div class="movie-detail-container">
+        <h3><b>{{ movie.fullTitle }}</b></h3>
+        <img class="poster" [src]="movie.image">
+        <p>{{ movie.plot }}</p>
+    </div>
 </div>
-
-<button (click)="sendBack()">Back</button>
