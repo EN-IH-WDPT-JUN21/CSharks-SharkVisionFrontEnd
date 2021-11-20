@@ -33,6 +33,10 @@ const routes: Routes = [
     path: 'playlist/:playlistId',
     component: PlaylistDetailsComponent,
   },
+  {
+    path: 'register',
+    component: RegisterComponent
+  }
 ];
 
 

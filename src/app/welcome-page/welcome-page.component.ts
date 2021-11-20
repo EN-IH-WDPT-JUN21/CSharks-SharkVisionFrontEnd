@@ -1,3 +1,4 @@
+import { NewPlaylist } from './../models/newPlaylist.model';
 import { Playlist } from './../models/playlist.model';
 import { PlaylistService } from './../services/playlist.service';
 import { UserService } from './../services/user.service';
@@ -9,6 +10,7 @@ import { PopularMovieResponse } from '../models/popularMovie.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-welcome-page',
@@ -27,6 +29,14 @@ export class WelcomePageComponent implements OnInit {
   userPlaylists: Playlist[];
   showPlaylists: boolean;
 
+  playlistVisible: boolean;
+
+  createNewPlaylist: boolean;
+
+  newPlaylistForm: FormGroup;
+  newPlaylist: FormControl;
+  visible: FormControl;
+
   constructor(private auth: AuthService, private movieService: MovieService, 
     private userService: UserService, private _snackBar: MatSnackBar,
     private playlistService:PlaylistService) {
@@ -35,6 +45,15 @@ export class WelcomePageComponent implements OnInit {
     this.showDetail = false;
     this.userPlaylists = [];
     this.showPlaylists = false;
+    this.playlistVisible = false;
+    this.createNewPlaylist = false;
+
+    this.newPlaylist = new FormControl('',[Validators.required]);
+    this.visible = new FormControl(false);
+    this.newPlaylistForm = new FormGroup({
+      newPlaylist:this.newPlaylist,
+      visible:this.visible
+    })
   }
 
   ngOnInit(): void {
@@ -90,23 +109,39 @@ export class WelcomePageComponent implements OnInit {
 
   addToPlaylist(id:number) {
     this.showPlaylists = false;
-    console.log(this.randomMovie.id);
-    if (this.userPlaylists[id].movies.length < 10){
-      this.playlistService.addMovie(this.userPlaylists[id].playlistId,this.randomMovie.id).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+    if (this.userPlaylists[id].movies.length >= 10){
+      this.openSnackBar("Playlist is full","Close");
+    }
+    else {
+      this.addMovie(id);
+    }
+    this.getUserPlaylists();
+  }
+
+  addMovie(id:number) {
+    this.showPlaylists = false;
+    this.playlistService.addMovie(this.userPlaylists[id].playlistId,this.randomMovie.id).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
         result => {
           
         }
       );
       this.openSnackBar("Movie added to playlist","Close");
-    }
-    else {
-      this.openSnackBar("Playlist is full","Close");
-    }
     this.getUserPlaylists();
   }
 
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action);
+  }
+
+  createPlaylist(): void{
+    let newPlaylist: NewPlaylist = new NewPlaylist(this.newPlaylistForm.value.newPlaylist, this.playlistVisible);
+    console.log(newPlaylist);
+    this.userService.createPlaylist(newPlaylist).pipe(takeUntil(this.ngUnsubscribe)).subscribe(result => {
+      console.log(result);
+    });
+    this.openSnackBar("Playlist created","Close");
+    this.createNewPlaylist = false;
+    this.getUserPlaylists();
   }
 
   ngOnDestroy() {

@@ -1,3 +1,4 @@
+import { UserService } from './../services/user.service';
 import { PlaylistService } from './../services/playlist.service';
 import { AuthService } from './../services/auth.service';
 import { MovieDetail } from './../models/movieDetail.model';
@@ -5,11 +6,12 @@ import { FoundMovieResponse } from './../models/foundMovie.model';
 import { MovieService } from './../services/movie.service';
 import { Movie } from './../models/movie.model';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Playlist } from '../models/playlist.model';
+import { NewPlaylist } from '../models/newPlaylist.model';
 
 @Component({
   selector: 'app-movie-search',
@@ -34,8 +36,15 @@ export class MovieSearchComponent implements OnInit {
   userPlaylists: Playlist[];
   showPlaylists: boolean;
 
+  createNewPlaylist: boolean;
+
+  newPlaylistForm: FormGroup;
+  newPlaylist: FormControl;
+  visible: FormControl;
+  playlistVisible: boolean;
+
   constructor(private movieService:MovieService,
-    private authService:AuthService, private _snackBar: MatSnackBar, private playlistService:PlaylistService) {
+    private authService:AuthService, private _snackBar: MatSnackBar, private playlistService:PlaylistService, private userService:UserService) {
     this.searchKeyword = new FormControl('');
 
     this.searchForm = new FormGroup({
@@ -49,6 +58,16 @@ export class MovieSearchComponent implements OnInit {
 
     this.userPlaylists = [];
     this.showPlaylists = false;
+
+    this.createNewPlaylist = false;
+    this.playlistVisible = false;
+
+    this.newPlaylist = new FormControl('',[Validators.required]);
+    this.visible = new FormControl(false);
+    this.newPlaylistForm = new FormGroup({
+      newPlaylist:this.newPlaylist,
+      visible:this.visible
+    })
    }
 
   ngOnInit(): void {
@@ -110,6 +129,17 @@ export class MovieSearchComponent implements OnInit {
       result => {
         this.userPlaylists = result;
     })
+  }
+
+  createPlaylist(): void{
+    let newPlaylist: NewPlaylist = new NewPlaylist(this.newPlaylistForm.value.newPlaylist, this.playlistVisible);
+    console.log(newPlaylist);
+    this.userService.createPlaylist(newPlaylist).pipe(takeUntil(this.ngUnsubscribe)).subscribe(result => {
+      console.log(result);
+    });
+    this.openSnackBar("Playlist created","Close");
+    this.createNewPlaylist = false;
+    this.getUserPlaylists();
   }
 
   checkLoggedIn():boolean {
