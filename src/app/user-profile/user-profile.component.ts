@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from './../services/user.service';
 import { Router } from '@angular/router';
 import { AuthService } from './../services/auth.service';
@@ -22,15 +23,17 @@ export class UserProfileComponent implements OnInit {
   toChangePicture: boolean = false;
   toChangeBio: boolean = false;
 
-  constructor(private router: Router, private auth: AuthService, private userService: UserService) { }
+  constructor(private router: Router, private auth: AuthService, private userService: UserService, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.auth.loggedIn.subscribe(loggedIn => this.isLoggedIn = loggedIn);
+
+    this.isLoggedIn = this.checkLoggedIn();
+    console.log('user update ' + this.isLoggedIn);
     if (!this.isLoggedIn) {
       this.router.navigate(['/login']);
-      return;
+    } else {
+      this.getUser();
     }
-    this.getUser();
   }
 
   getUser() {
@@ -61,9 +64,12 @@ export class UserProfileComponent implements OnInit {
 
   updatePicture(pictureUrl: string) {
     console.log(this.currentUserDetails.username);
-    this.userService.setUserUrl(pictureUrl).subscribe(data => {
-      console.log(data);
-    });
+    this.userService.setUserUrl(pictureUrl).subscribe(
+      data => {
+        console.log(data);
+        this.openSnackBar("Picture updated", "Close");
+      }
+    );
     this.toChangePicture = false;
   }
 
@@ -74,8 +80,17 @@ export class UserProfileComponent implements OnInit {
   updateBio(bio: string) {
     this.userService.setUserBio(bio).subscribe(data => {
       console.log(data);
+      this.openSnackBar("Bio updated", "Close");
     });
     this.toChangeBio = false;
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, { duration: 4000 });
+  }
+
+  checkLoggedIn():boolean {
+    return this.auth.isLoggedIn();
   }
 
 }

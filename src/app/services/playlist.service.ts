@@ -39,7 +39,7 @@ export class PlaylistService {
       data => {
         console.log("deleted");
       }
-      );
+    );
   }
 
   // Add a Movie to a Playlist
@@ -47,7 +47,7 @@ export class PlaylistService {
     return this.http.put(this.baseUrl + playlistId + '/add/' + titleId, {});
   }
 
-  // Delete a Movie from a Playlist 
+  // Delete a Movie from a Playlist
   removeMovie(playlistId:number, titleId: string) : Observable<Object> {
     return this.http.put(this.baseUrl + playlistId + '/remove/' + titleId, {});
   }

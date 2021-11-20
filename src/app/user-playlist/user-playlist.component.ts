@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -26,58 +27,73 @@ export class UserPlaylistComponent implements OnInit {
   newPlaylistName: string;
   visible: boolean = false;
   user!: User;
-  
-  constructor(private playlistService: PlaylistService, private auth: AuthService, private userService: UserService, private router: Router) {
-    this.playlistList = [];
-    this.newPlaylistName = "";
-   }
 
-  ngOnInit(): void {
-    
-    this.auth.loggedIn.subscribe(loggedIn => this.isLoggedIn = loggedIn);
-    if (!this.isLoggedIn) {
-      this.router.navigate(['/login']);
-      return;
-    }
-    
-    this.playlistService.getPlaylistByUserId().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
-      result => {
-        this.playlistList = result;
-      });
+  constructor(
+    private playlistService: PlaylistService,
+    private auth: AuthService,
+    private userService: UserService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {
+    this.playlistList = [];
+    this.newPlaylistName = '';
   }
 
-  removePlaylist(playlist:Playlist):void{
+  ngOnInit(): void {
+    this.isLoggedIn = this.checkLoggedIn();
+    console.log('playlist update ' + this.isLoggedIn);
+    if (!this.isLoggedIn){
+      this.router.navigate(['/login']);
+    } else {
+      this.updatePlaylistList();
+    }
+  }
+
+  updatePlaylistList(): void {
+    this.playlistService.getPlaylistByUserId()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(result => this.playlistList = result);
+  }
+
+
+  changeVisible(): void {
+    this.visible = !this.visible;
+  }
+
+  addPlaylist(): void {
+    let newPlaylist: NewPlaylist = new NewPlaylist(this.newPlaylistName, this.visible);
+    this.userService.createPlaylist(newPlaylist)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        result => {
+          this.updatePlaylistList()
+          this.openSnackBar('Playlist created: ' + this.newPlaylistName, 'Close');
+        }
+      );
+  }
+
+  removePlaylist(playlist: Playlist): void {
     this.playlistService.deletePlaylist(playlist.playlistId);
     this.playlistService.getPlaylistByUserId().subscribe(
       result => {
         this.playlistList = result;
+        this.updatePlaylistList();
+        this.openSnackBar('Playlist removed: ' + playlist.name, 'Close');
       });
-    }
-    
-    updatePlaylistList(): void{
-    this.playlistService.getPlaylistByUserId().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
-      result => {
-        this.playlistList = result;
-      });
-    }
-
-    changeVisible(): void{
-      this.visible = !this.visible;
-    }
-    
-    addPlaylist(): void{
-      let newPlaylist: NewPlaylist = new NewPlaylist(this.newPlaylistName, this.visible);
-
-
-      console.log(newPlaylist);
-      this.userService.createPlaylist(newPlaylist).pipe(takeUntil(this.ngUnsubscribe)).subscribe(result => {
-        console.log(result);
-
-      });
-    }
-    
-    ngOnDestroy() {
-      this.ngUnsubscribe.next();
-      this.ngUnsubscribe.complete();
-    } 
   }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, { duration: 4000 });
+  }
+
+  checkLoggedIn():boolean {
+    return this.auth.isLoggedIn();
+  }
+
+}

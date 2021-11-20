@@ -114,7 +114,7 @@ export class MovieSearchComponent implements OnInit {
     if (this.userPlaylists[id].movies.length < 10){
       this.playlistService.addMovie(this.userPlaylists[id].playlistId,this.movieDetail.id).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
         result => {
-          
+
         }
       );
       this.openSnackBar("Movie added to playlist","Close");
@@ -151,10 +151,10 @@ export class MovieSearchComponent implements OnInit {
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
-  } 
+  }
 
   openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action);
+    this._snackBar.open(message, action, { duration: 4000 });
   }
 
 }

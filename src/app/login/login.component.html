@@ -4,7 +4,7 @@
     </div>
 
     <ng-container *ngIf="isRegister; else loginTemplate">
-      <app-register (backToLogin)="goToLogin($event)" (setUsernameForLogin)="setUsername($event)"></app-register>
+      <app-register (backToLogin)="goToLogin()" (setUsernameForLogin)="setUsername($event)"></app-register>
     </ng-container>
 
     <ng-template #loginTemplate>
@@ -17,9 +17,6 @@
         <div class="button_container">
           <button class="login_button" type="submit">Login</button>
           <button class="register_button" (click)="goToRegister()">Register</button>
-        </div>
-        <div class="error_container">
-          <p class="error_message" *ngIf="isLoginError" >Login failed!</p>
         </div>
     </form>
     </ng-template>

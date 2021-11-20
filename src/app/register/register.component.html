@@ -14,10 +14,7 @@
                 Username is required!
             </p>
             <p class="error_msg" *ngIf="username.hasError('minlength') && username.touched">
-                Username must be at least 3 characters long!
-            </p>
-            <p class="error_msg" *ngIf="!isValidUsername && username.valid">
-                Username is already taken!
+                Username must be at <br /> least 3 characters long!
             </p>
         </div>
 
@@ -28,9 +25,6 @@
             </p>
             <p class="error_msg" *ngIf="email.hasError('email') && (email.dirty)">
                 Email is not valid!
-            </p>
-            <p class="error_msg" *ngIf="!isValidEmail && email.valid">
-                Email is already taken!
             </p>
         </div>
 
