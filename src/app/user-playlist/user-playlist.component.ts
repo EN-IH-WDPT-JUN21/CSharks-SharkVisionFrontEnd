@@ -38,18 +38,14 @@ export class UserPlaylistComponent implements OnInit {
     this.playlistService.getPlaylistByUserId().subscribe(
       result => {
         this.playlistList = result;
-        console.log(result);
       });
   }
 
   removePlaylist(playlist:Playlist):void{
     this.playlistService.deletePlaylist(playlist.playlistId);
-    console.log("Playlist removed", playlist.playlistId);
-
     this.playlistService.getPlaylistByUserId().subscribe(
       result => {
         this.playlistList = result;
-        console.log(result);
       });
     }
     
@@ -57,20 +53,16 @@ export class UserPlaylistComponent implements OnInit {
     this.playlistService.getPlaylistByUserId().subscribe(
       result => {
         this.playlistList = result;
-        console.log(result);
       });
     }
 
     changeVisible(): void{
       this.visible = !this.visible;
-      console.log(this.visible);
     }
     
     addPlaylist(): void{
       let newPlaylist: NewPlaylist = new NewPlaylist(this.newPlaylistName, this.visible);
-      console.log(newPlaylist);
       this.userService.createPlaylist(newPlaylist).subscribe(result => {
-        console.log(result);
       });
     }
 }

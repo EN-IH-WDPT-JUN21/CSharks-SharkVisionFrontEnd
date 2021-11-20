@@ -39,9 +39,9 @@ import { PlaylistDetailsComponent } from './playlist-details/playlist-details.co
     WelcomePageComponent,
     HeaderComponent,
     FooterComponent,
-    RandomMovieDetailComponent
+    RandomMovieDetailComponent,
     UserPlaylistItemComponent,
-    PlaylistDetailsComponent
+    PlaylistDetailsComponent,
   ],
   imports: [
     BrowserModule,

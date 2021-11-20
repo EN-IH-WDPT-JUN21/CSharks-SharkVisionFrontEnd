@@ -1,6 +1,5 @@
 import { Playlist } from './../models/playlist.model';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { PlaylistService } from '../services/playlist.service';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-user-playlist-item',
