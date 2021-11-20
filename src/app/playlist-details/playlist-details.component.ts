@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MovieService } from './../services/movie.service';
 import { PlaylistService } from './../services/playlist.service';
 import { Component, Input, OnInit } from '@angular/core';
@@ -22,7 +23,8 @@ export class PlaylistDetailsComponent implements OnInit {
     private playlistService: PlaylistService,
     private movieService: MovieService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private snackBar: MatSnackBar
   ) {
     this.foundMovie = new MovieDetail('', '', '', '', '', '', '', '', '', '');
     this.movieDetailsList = [];
@@ -52,7 +54,13 @@ export class PlaylistDetailsComponent implements OnInit {
       () => {
         this.movieDetailsList = [];
         this.getMovies();
+        this.openSnackBar('Movie removed from playlist', 'Close');
       }
     );
   }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, { duration: 4000 });
+  }
+
 }

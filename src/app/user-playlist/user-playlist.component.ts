@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -27,9 +28,15 @@ export class UserPlaylistComponent implements OnInit {
   visible: boolean = false;
   user!: User;
 
-  constructor(private playlistService: PlaylistService, private auth: AuthService, private userService: UserService, private router: Router) {
+  constructor(
+    private playlistService: PlaylistService,
+    private auth: AuthService,
+    private userService: UserService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {
     this.playlistList = [];
-    this.newPlaylistName = "";
+    this.newPlaylistName = '';
   }
 
   ngOnInit(): void {
@@ -44,9 +51,7 @@ export class UserPlaylistComponent implements OnInit {
   updatePlaylistList(): void {
     this.playlistService.getPlaylistByUserId()
       .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(
-        result => this.playlistList = result
-      );
+      .subscribe(result => this.playlistList = result);
   }
 
 
@@ -58,7 +63,12 @@ export class UserPlaylistComponent implements OnInit {
     let newPlaylist: NewPlaylist = new NewPlaylist(this.newPlaylistName, this.visible);
     this.userService.createPlaylist(newPlaylist)
       .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(result => this.updatePlaylistList());
+      .subscribe(
+        result => {
+          this.updatePlaylistList()
+          this.openSnackBar('Playlist created: ' + this.newPlaylistName, 'Close');
+        }
+      );
   }
 
   removePlaylist(playlist: Playlist): void {
@@ -67,12 +77,18 @@ export class UserPlaylistComponent implements OnInit {
       result => {
         this.playlistList = result;
         this.updatePlaylistList();
+        this.openSnackBar('Playlist removed: ' + playlist.name, 'Close');
       });
   }
 
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+  }
+
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, { duration: 4000 });
   }
 
 }

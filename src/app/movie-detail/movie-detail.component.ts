@@ -20,23 +20,25 @@ export class MovieDetailComponent implements OnInit {
   foundMovie: MovieDetail;
 
   constructor(
-    private router:Router,
-    private activatedRoute:ActivatedRoute,
-    private movieService:MovieService) {
-      this.foundMovie = new MovieDetail('','','','','','','','','','');
-   }
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private movieService: MovieService) {
+    this.foundMovie = new MovieDetail('', '', '', '', '', '', '', '', '', '');
+  }
 
   ngOnInit(): void {
-    this.movieService.getMovieById(this.movieDetail.id).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
-      result => {
-        this.foundMovie = result;
-      }
-    )
+    this.movieService.getMovieById(this.movieDetail.id)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(
+        result => {
+          this.foundMovie = result;
+        }
+      )
   }
 
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
-  } 
+  }
 
 }
