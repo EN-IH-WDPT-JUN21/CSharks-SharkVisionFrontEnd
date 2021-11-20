@@ -4,9 +4,9 @@
         <img src="assets\cshark.png" alt="A blue, geometric shark on a transparent background">
     </div>
 
-  <header class="welcome_header">
-    <h1>Welcome to Sharkvision!</h1>
-  </header>
+    <header class="welcome_header">
+        <h1>Welcome to Sharkvision!</h1>
+    </header>
 
     <div class="welcome_main" *ngIf="!isLoggedIn">
         <h3>
@@ -17,7 +17,8 @@
             New to Sharkvision? Register for an account here:
         </h3>
         <div class="buttons">
-            <button mat-raised-button class="register">Register</button>
+            <button mat-raised-button class="register" routerLink="/register" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact:true}">Register</button>
         </div>
     </div>
 
@@ -27,23 +28,38 @@
             <br />
             Search for a film, create a playlist and add your favourites.
             <br />
-            Not sure what to look for? Try this: 
+            Not sure what to look for? Try this:
         </h3>
         <div class="buttons">
             <button mat-raised-button class="register" (click)="randomMovieGenerator()">Random Movie</button>
         </div>
     </div>
 
-    <!-- *ngIf="showDetail" -->
-    <div class="random_movie" >
+
+    <div class="random_movie" *ngIf="showDetail">
         <app-random-movie-detail [randomMovie]="randomMovie"></app-random-movie-detail>
         <div class="result_buttons">
             <div class="dropdown">
-                <button mat-raised-button class="add" *ngIf="isLoggedIn" [disabled]="showPlaylists" (click)="showPlaylists = true">Add to Playlist...</button>
+                <button mat-raised-button class="add" *ngIf="isLoggedIn" [disabled]="showPlaylists"
+                    (click)="showPlaylists = true">Add to Playlist...</button>
                 <div class="dropdown-content">
                     <ul *ngIf="showPlaylists">
-                        <li *ngFor="let playlist of userPlaylists" >
-                            <button class="add_to" mat-raised-button (click)="addToPlaylist()">{{playlist}}</button>
+                        <li class="playlistForm">
+                            <button class="add_to" mat-raised-button (click)="createNewPlaylist = true">Create New Playlist</button>
+                            <form class="newPlaylist" (ngSubmit)="createPlaylist()" [formGroup]="newPlaylistForm" *ngIf="createNewPlaylist">
+                                <input class="createPlaylist" type="text" placeholder="Playlist name"
+                                    formControlName="newPlaylist">
+                                <p class="error_msg" *ngIf="newPlaylist.invalid && newPlaylist.touched">
+                                    Playlist name cannot be empty
+                                </p>
+                                <label for="public">Public? <input type="checkbox" formControlName="visible" formControlName="visible" ng-change="visible = true"></label>
+                                <button mat-raised-button color="primary" class="add_to_submit" type="submit" [disabled]="newPlaylistForm.invalid">Create
+                                    Playlist</button>
+                            </form>
+                        </li>
+                        <li *ngFor="let playlist of userPlaylists; let i = index">
+                            <button class="add_to" mat-raised-button
+                                (click)="addToPlaylist(i)">{{playlist.name}}</button>
                         </li>
                     </ul>
                 </div>
@@ -58,8 +74,8 @@
         <ul>
             <li *ngFor="let movies of popularMovies | slice:0:9">
                 <img [src]="movies.image">
-                <p>{{movies.fullTitle}} <br/>
-                Rating: {{movies.imDbRating}} <br/></p>
+                <p>{{movies.fullTitle}} <br />
+                    Rating: {{movies.imDbRating}} <br /></p>
             </li>
         </ul>
     </div>

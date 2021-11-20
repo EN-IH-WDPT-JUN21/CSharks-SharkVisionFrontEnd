@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { NewPlaylist } from '../models/newPlaylist.model';
 import { Playlist } from '../models/playlist.model';
 import { User } from '../models/user.model';
+
 import { AuthService } from '../services/auth.service';
 import { PlaylistService } from '../services/playlist.service';
 import { UserService } from '../services/user.service';
@@ -13,6 +16,8 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./user-playlist.component.css']
 })
 export class UserPlaylistComponent implements OnInit {
+
+  private ngUnsubscribe = new Subject();
 
   playlistList: Playlist[];
   isLoggedIn: boolean | undefined;
@@ -35,7 +40,7 @@ export class UserPlaylistComponent implements OnInit {
       return;
     }
     
-    this.playlistService.getPlaylistByUserId().subscribe(
+    this.playlistService.getPlaylistByUserId().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       result => {
         this.playlistList = result;
       });
@@ -50,7 +55,7 @@ export class UserPlaylistComponent implements OnInit {
     }
     
     updatePlaylistList(): void{
-    this.playlistService.getPlaylistByUserId().subscribe(
+    this.playlistService.getPlaylistByUserId().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       result => {
         this.playlistList = result;
       });
@@ -62,7 +67,17 @@ export class UserPlaylistComponent implements OnInit {
     
     addPlaylist(): void{
       let newPlaylist: NewPlaylist = new NewPlaylist(this.newPlaylistName, this.visible);
-      this.userService.createPlaylist(newPlaylist).subscribe(result => {
+
+
+      console.log(newPlaylist);
+      this.userService.createPlaylist(newPlaylist).pipe(takeUntil(this.ngUnsubscribe)).subscribe(result => {
+        console.log(result);
+
       });
     }
-}
+    
+    ngOnDestroy() {
+      this.ngUnsubscribe.next();
+      this.ngUnsubscribe.complete();
+    } 
+  }

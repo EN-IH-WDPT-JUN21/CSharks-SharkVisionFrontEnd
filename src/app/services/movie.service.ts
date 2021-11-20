@@ -7,10 +7,10 @@ import { Observable } from 'rxjs';
 })
 export class MovieService {
 
-  readonly searchTitle:string = "https://imdb-api.com/en/API/SearchMovie/k_xmbw7o8f/";
-  readonly searchId:string = "https://imdb-api.com/en/API/Title/k_wvrna8ro/";
-  readonly popMovies:string = "https://imdb-api.com/en/API/MostPopularMovies/k_ok4qnr49";
-
+  readonly searchTitle:string = "https://imdb-api.com/en/API/SearchMovie/k_o6cnymen/";
+  readonly searchId:string = "https://imdb-api.com/en/API/Title/k_o6cnymen/";
+  readonly popMovies:string = "https://imdb-api.com/en/API/MostPopularMovies/k_xmbw7o8f";
+  
   constructor(
     private http:HttpClient
   ) { }

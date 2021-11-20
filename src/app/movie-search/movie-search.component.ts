@@ -1,10 +1,17 @@
+import { UserService } from './../services/user.service';
+import { PlaylistService } from './../services/playlist.service';
 import { AuthService } from './../services/auth.service';
 import { MovieDetail } from './../models/movieDetail.model';
 import { FoundMovieResponse } from './../models/foundMovie.model';
 import { MovieService } from './../services/movie.service';
 import { Movie } from './../models/movie.model';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Playlist } from '../models/playlist.model';
+import { NewPlaylist } from '../models/newPlaylist.model';
 
 @Component({
   selector: 'app-movie-search',
@@ -13,6 +20,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class MovieSearchComponent implements OnInit {
 
+  private ngUnsubscribe = new Subject();
 
   searchForm:FormGroup;
 
@@ -25,8 +33,18 @@ export class MovieSearchComponent implements OnInit {
 
   isLoggedIn: boolean;
 
+  userPlaylists: Playlist[];
+  showPlaylists: boolean;
+
+  createNewPlaylist: boolean;
+
+  newPlaylistForm: FormGroup;
+  newPlaylist: FormControl;
+  visible: FormControl;
+  playlistVisible: boolean;
+
   constructor(private movieService:MovieService,
-    private authService:AuthService) {
+    private authService:AuthService, private _snackBar: MatSnackBar, private playlistService:PlaylistService, private userService:UserService) {
     this.searchKeyword = new FormControl('');
 
     this.searchForm = new FormGroup({
@@ -37,15 +55,29 @@ export class MovieSearchComponent implements OnInit {
     this.details = false;
     this.movieDetail = new Movie('','','','','');
     this.isLoggedIn = false;
+
+    this.userPlaylists = [];
+    this.showPlaylists = false;
+
+    this.createNewPlaylist = false;
+    this.playlistVisible = false;
+
+    this.newPlaylist = new FormControl('',[Validators.required]);
+    this.visible = new FormControl(false);
+    this.newPlaylistForm = new FormGroup({
+      newPlaylist:this.newPlaylist,
+      visible:this.visible
+    })
    }
 
   ngOnInit(): void {
     this.isLoggedIn = this.checkLoggedIn();
+    this.getUserPlaylists();
   }
 
   onSubmit() : void {
     this.foundMovies = [];
-    this.movieService.getMovie(this.searchKeyword.value).subscribe(result => {
+    this.movieService.getMovie(this.searchKeyword.value).pipe(takeUntil(this.ngUnsubscribe)).subscribe(result => {
       const foundMoviesResponse: FoundMovieResponse = result;
       var i = 0;
       for ( let movie of foundMoviesResponse.results) {
@@ -76,12 +108,51 @@ export class MovieSearchComponent implements OnInit {
     this.movieDetail = movie;
   }
 
-  addToPlayList() {
-    
+  addToPlayList(id:number) {
+    this.showPlaylists = false;
+    if (this.userPlaylists[id].movies.length < 10){
+      this.playlistService.addMovie(this.userPlaylists[id].playlistId,this.movieDetail.id).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+        result => {
+          
+        }
+      );
+      this.openSnackBar("Movie added to playlist","Close");
+    }
+    else {
+      this.openSnackBar("Playlist is full","Close");
+    }
+    this.getUserPlaylists();
+  }
+
+  getUserPlaylists(): void {
+    this.playlistService.getPlaylistByUserId().subscribe(
+      result => {
+        this.userPlaylists = result;
+    })
+  }
+
+  createPlaylist(): void{
+    let newPlaylist: NewPlaylist = new NewPlaylist(this.newPlaylistForm.value.newPlaylist, this.playlistVisible);
+    console.log(newPlaylist);
+    this.userService.createPlaylist(newPlaylist).pipe(takeUntil(this.ngUnsubscribe)).subscribe(result => {
+      console.log(result);
+    });
+    this.openSnackBar("Playlist created","Close");
+    this.createNewPlaylist = false;
+    this.getUserPlaylists();
   }
 
   checkLoggedIn():boolean {
     return this.authService.isLoggedIn();
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  } 
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
   }
 
 }

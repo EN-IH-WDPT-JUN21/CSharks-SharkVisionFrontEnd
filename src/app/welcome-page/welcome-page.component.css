@@ -1,7 +1,7 @@
 .welcome {
     display: flex;
-    align-items: center;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
     font-family:Georgia, 'Times New Roman', Times, serif;
 }
@@ -21,10 +21,15 @@ img {
 
 .result {
     margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .result ul {
     display: flex;
+    justify-content: center;
     background-color: #c9e0ed;
 }
 
@@ -77,6 +82,7 @@ img {
 button {
     margin: 10px;
     height: 50px;
+    width: 150px;
 }
 
 .random_movie {
@@ -90,7 +96,6 @@ button {
 
 .dropdown-content li {
     list-style-type: none;
-    color: #7843e6;
 }
 
 .add_to {
@@ -100,4 +105,15 @@ button {
     padding: 2px;
     margin: 2px;
     height: fit-content;
+}
+
+.playlist_form, .newPlaylist {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.newPlaylist {
+    width: 150px;
 }

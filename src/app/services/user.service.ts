@@ -48,9 +48,14 @@ export class UserService {
       return this.http.post(this.baseUrl, user);
     }
   
-    // Update User
-    setUser(id: number, value: any): Observable<Object> {
-      return this.http.put(this.baseUrl + id + '/set', value);
+    // Update User's Picture
+    setUserUrl(value: string): Observable<Object> {
+      return this.http.patch(this.baseUrl + '/authenticated/set', {}, { params: { picture: value } });
+      }
+
+    // Update User's Bio
+    setUserBio(value: string): Observable<Object> {
+      return this.http.patch(this.baseUrl + '/authenticated/set', {}, { params: { bio: value } });
     }
   
     // Create Playlist

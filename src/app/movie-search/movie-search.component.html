@@ -35,7 +35,27 @@
         <div class="show_details" *ngIf="details">
             <app-movie-detail [movieDetail]="movieDetail"></app-movie-detail>
             <div class="buttons">
-                <button mat-raised-button class="add" (click)="addToPlayList()" *ngIf="isLoggedIn">Add to Playlist...</button>
+                <button mat-raised-button class="add" [disabled]="showPlaylists" (click)="showPlaylists = true" *ngIf="isLoggedIn">Add to Playlist...</button>
+                <div class="dropdown-content">
+                    <ul *ngIf="showPlaylists">
+                        <li>
+                            <button class="add_to" mat-raised-button (click)="createNewPlaylist = true">Create New Playlist</button>
+                            <form class="newPlaylist" (ngSubmit)="createPlaylist()" [formGroup]="newPlaylistForm" *ngIf="createNewPlaylist">
+                                <input class="createPlaylist" type="text" placeholder="Playlist name"
+                                    formControlName="newPlaylist">
+                                <p class="error_msg" *ngIf="newPlaylist.invalid && newPlaylist.touched">
+                                    Playlist name cannot be empty
+                                </p>
+                                <label for="public">Public? <input type="checkbox" formControlName="visible" formControlName="visible"></label>
+                                <button mat-raised-button color="primary" class="add_to_submit" type="submit" [disabled]="newPlaylistForm.invalid">Create
+                                    Playlist</button>
+                            </form>
+                        </li>
+                        <li *ngFor="let playlist of userPlaylists; let i = index" >
+                            <button class="add_to" mat-raised-button (click)="addToPlayList(i)">{{playlist.name}}</button>
+                        </li>
+                    </ul>
+                </div>
                 <button mat-raised-button class="back" (click)="back()">Back</button>
             </div>
         </div>

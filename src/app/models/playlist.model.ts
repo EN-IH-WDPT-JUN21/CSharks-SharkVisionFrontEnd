@@ -1,6 +1,7 @@
 import { Movie } from "./movie.model";
 import { User } from "./user.model";
 
+
 export class Playlist{
     constructor(
         private _playlistId: number, 

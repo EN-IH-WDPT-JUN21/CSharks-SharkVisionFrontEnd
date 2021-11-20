@@ -33,7 +33,8 @@
 
 .poster img {
     justify-content: center;
-    width: 80px;
+    width: 50px;
+    width: 100%;
     padding: 10px;
     margin: 10px;
 }

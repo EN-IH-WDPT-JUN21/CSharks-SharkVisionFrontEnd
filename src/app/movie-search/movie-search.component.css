@@ -28,6 +28,7 @@ img {
 
 button {
     margin:10px;
+    height: 50px;
 }
 
 .movie_details {
@@ -66,12 +67,33 @@ button {
     text-align: left;
 }
 
-.show_details {
-    width: 75%;
-}
-
 .buttons {
     display: flex;
     justify-content: center;
     margin: 20px;
+}
+
+.playlist_form, .newPlaylist {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.newPlaylist {
+    width: 150px;
+}
+
+.dropdown-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.dropdown-content ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
