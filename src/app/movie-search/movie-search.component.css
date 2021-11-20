@@ -29,6 +29,7 @@ img {
 button {
     margin:10px;
     height: 50px;
+    width: 150px;
 }
 
 .movie_details {
@@ -91,9 +92,18 @@ button {
     justify-content: center;
 }
 
+.add_format {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .dropdown-content ul {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    color: #3e628e;
+    list-style-type: none;
 }
